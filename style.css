@@ -4,17 +4,11 @@ body {
   padding: 0;
 }
 
-iframe {
-  max-width: 800px;
-  height: 450px;
-  margin: 0 auto;
-  display: block;
+#tabs {
+  width: 90%;
+  margin: 50px auto;
 }
 
-/* #forecasts {
-  text-align: center;
-  margin-top: 50px;
-} */
 
 h1, h2 {
   font-weight: bold;
@@ -30,9 +24,13 @@ h1, h2 {
 }
 
 .grid-container {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    /* display: grid; */
+    /* grid-template-columns: repeat(3, 1fr); */
     grid-gap: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
 }
 
 .grid-item {
