@@ -31,7 +31,7 @@ jobs:
     - name: Fetch stream url
       run: |
         # stop the build if there are Python syntax errors or undefined names
-        python fetch_stream.py > stream_url.txt
+        python fetch_stream.py
         
     - name: commit files
       run: |
