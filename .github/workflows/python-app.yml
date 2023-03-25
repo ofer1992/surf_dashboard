@@ -18,11 +18,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: checkout repo content
     - uses: actions/checkout@v3
+    
     - name: Set up Python 3.10
       uses: actions/setup-python@v3
       with:
         python-version: "3.10"
+        
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
@@ -34,14 +37,16 @@ jobs:
         python fetch_stream.py > stream_url.txt
         echo "::set-env name=STREAM_URL::$(cat stream_url.txt)"
         
-    - name: Update file in repo
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: commit files
       run: |
-        curl \
-          -X PUT \
-          -H "Authorization: token $GITHUB_TOKEN" \
-          -H "Content-Type: application/json" \
-          -d '{"message": "Update file", "content": "'$(base64 stream_url.txt)'" }' \
-          "https://api.github.com/repos/ofer1992/surf_dashboard/contents/stream_url.txt"
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add -A
+        git diff-index --quiet HEAD || (git commit -a -m "updated logs" --allow-empty)
+
+    - name: push changes
+      uses: ad-m/github-push-action@v0.6.0
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        branch: main 
 
