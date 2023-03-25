@@ -20,6 +20,8 @@ jobs:
     steps:
     - name: checkout repo content
       uses: actions/checkout@v3
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
     
     - name: Set up Python 3.10
       uses: actions/setup-python@v3
