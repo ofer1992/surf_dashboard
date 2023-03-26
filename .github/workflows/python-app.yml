@@ -28,14 +28,14 @@ jobs:
         python -m pip install --upgrade pip
         pip install requests beautifulsoup4 
       
-    - name: generate cams.html
-      run: |
-        python cams.py     
-
     - name: Fetch stream url
       run: |
         # stop the build if there are Python syntax errors or undefined names
         python fetch_stream.py
+        
+    - name: generate cams.html
+      run: |
+        python cams.py     
         
     - name: commit files
       run: |
