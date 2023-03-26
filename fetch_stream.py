@@ -20,10 +20,12 @@ for name, url in urls.items():
         iframe_soup = BeautifulSoup(iframe_response.content, 'html.parser')
         script_tag = iframe_soup.find_all('script')[-1] # Get the last script tag in the iframe
         script_text = script_tag.string.strip() # Get the text content of the script tag
+        stream_address = re.search("var address = '(.*)';", script_text).group(1)
+        stream_address = "https"+stream_address[4:]
         stream_id = re.search("var streamid = '(.*)';", script_text).group(1)
 
     if stream_id is not None:
-        stream_url = f"https://s5.ipcamlive.com/streams/{stream_id}/stream.m3u8" # Construct the direct stream source URL using the value of streamid
+        stream_url = f"{stream_address}streams/{stream_id}/stream.m3u8" # Construct the direct stream source URL using the value of streamid
         stream_urls[name] = stream_url
         print(stream_url) # Print the direct stream source URL
 
