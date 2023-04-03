@@ -26,7 +26,7 @@ for k, v in stream_urls.items():
   vid.append(src)
 
 script = page.new_tag("script")
-script.string = " ".join([f"videojs('{k}-cam');" for k in stream_urls.keys()])
+script.string = " ".join([f"videojs('{k}-cam').play();" for k in stream_urls.keys()])
 page.body.append(script)
 
 with open("cams.html", 'w') as f:
