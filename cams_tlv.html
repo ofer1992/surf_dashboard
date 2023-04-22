@@ -1,0 +1,26 @@
+<head>
+ <link href="https://unpkg.com/video.js/dist/video-js.css" rel="stylesheet"/>
+ <script src="https://unpkg.com/video.js/dist/video.js">
+ </script>
+</head>
+<body>
+ <div class="grid-container">
+  <div class="grid-item">
+   <iframe allowfullscreen="" height="500" id="cam" scrolling="no" src="https://gocamstream.com/WebRTCApp/play.html?name=0002" width="500">
+   </iframe>
+  </div>
+  <div class="grid-item">
+   <video class="video-js vjs-default-skin" controls="" height="500" id="dolphinarium-cam" preload="auto" width="500">
+    <source src="https://s10.ipcamlive.com/streams/0ayv6shguy5iefzga/stream.m3u8" type="application/x-mpegURL"/>
+   </video>
+  </div>
+  <div class="grid-item">
+   <video class="video-js vjs-default-skin" controls="" height="500" id="hilton-cam" preload="auto" width="500">
+    <source src="https://s75.ipcamlive.com/streams/4blxvvb8smrfjtesn/stream.m3u8" type="application/x-mpegURL"/>
+   </video>
+  </div>
+ </div>
+ <script>
+  videojs('dolphinarium-cam').play(); videojs('hilton-cam').play();
+ </script>
+</body>
