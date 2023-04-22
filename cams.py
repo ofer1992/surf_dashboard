@@ -57,5 +57,5 @@ html_haifa = """<head>
     </div>
 </body>"""
 
-generate(html_tlv, ["dolphinarium", "hilton"], "cams_haifa.html")
+generate(html_tlv, ["dolphinarium", "hilton"], "cams_tlv.html")
 generate(html_haifa, ["bat-galim", "meridian"], "cams_haifa.html")
