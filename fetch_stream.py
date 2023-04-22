@@ -6,7 +6,8 @@ import json
 
 urls = {"dolphinarium": "https://beachcam.co.il/dolfinarium.html",
         "hilton": "https://beachcam.co.il/yamit.html",
-        "bat-galim": "https://beachcam.co.il/batgalim.html"}
+        "bat-galim": "https://beachcam.co.il/batgalim.html",
+        "meridian": "https://beachcam.co.il/meridian.html"}
 stream_urls = {}
 for name, url in urls.items():
     response = requests.get(url)
