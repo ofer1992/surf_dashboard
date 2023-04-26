@@ -13,7 +13,10 @@ for name, url in urls.items():
     response = requests.get(url)
     soup = BeautifulSoup(response.content, 'html.parser')
 
-    iframe_src = soup.find('iframe')['src'] # Get the src attribute of the iframe element
+    try:
+        iframe_src = soup.find('iframe')['src'] # Get the src attribute of the iframe element
+    except TypeError:
+        continue
     stream_url = None
 
     if 'ipcamlive.com' in iframe_src: # Check if the iframe src is from ipcamlive.com
