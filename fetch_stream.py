@@ -7,6 +7,7 @@ import json
 urls = {
     "dolphinarium": "https://beachcam.co.il/dolfinarium.html",
     "hilton": "https://beachcam.co.il/yamit.html",
+    "yafo": "https://beachcam.co.il/yafo.html",
     "bat-galim": "https://beachcam.co.il/batgalim.html",
     "meridian": "https://beachcam.co.il/meridian.html"
 }
@@ -41,4 +42,4 @@ for name, url in urls.items():
         print(stream_url) # Print the direct stream source URL
 
 with open("stream_url.json", 'w') as f:
-    json.dump(stream_urls, f)
+    json.dump(stream_urls, f, indent=2)

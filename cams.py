@@ -31,11 +31,6 @@ html_tlv = """<head>
 
 <body>
     <div class="grid-container">
-        <div class="grid-item">
-            <iframe id="cam" width="500" height="500" allowfullscreen
-                src="https://gocamstream.com/WebRTCApp/play.html?name=0002" scrolling="no">
-            </iframe>
-        </div>
     </div>
 </body>"""
 
@@ -57,5 +52,5 @@ html_haifa = """<head>
     </div>
 </body>"""
 
-generate(html_tlv, ["dolphinarium", "hilton"], "cams_tlv.html")
+generate(html_tlv, ["dolphinarium", "hilton", "yafo"], "cams_tlv.html")
 generate(html_haifa, ["bat-galim", "meridian"], "cams_haifa.html")
