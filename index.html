@@ -1,71 +1,178 @@
 <!DOCTYPE html>
-
-<head>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js" integrity="sha256-lSjKY0/srUM9BE3dPm+c4fBo1dky2v27Gdjm2uoZaL0=" crossorigin="anonymous"></script>
-    <!-- <link href="https://unpkg.com/video.js/dist/video-js.css" rel="stylesheet"> -->
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
-    <link rel="stylesheet" type="text/css" href="style.css">
-
-    <!-- <script src="https://unpkg.com/video.js/dist/video.js"></script> -->
-    <!-- <script src="https://unpkg.com/videojs-contrib-hls/dist/videojs-contrib-hls.js"></script> -->
-    <script>
-    $(function () {
-        $("#tabs").tabs();
-    });
-    </script>
-</head>
-
-<body>
-    <div id="tabs">
-        <ul>
-            <li><a href="#live-wind">Live Wind</a></li>
-            <li><a href="#forecasts">Forecasts</a></li>
-            <li><a href="cams_haifa.html">Haifa Cameras</a></li>
-            <li><a href="cams_tlv.html">Tel Aviv Cameras</a></li>
-        </ul>
-        <div id="live-wind">
-            <h1>Live Wind</h1>
-            <h2>Bat Galim</h2>
-            <iframe id="live_wind" frameborder="0" marginheight="1" marginwidth="1" scrolling="no"
-                src="https://widget.holfuy.com/?station=1113&su=knots&t=C&lang=en&mode=average&avgrows=32"
-                style="width:100%; height:170px;"></iframe>
-        </div>
-        <div id="forecasts">
-            <h1>Forecasts</h1>
-            <script id="wg_fwdg_910107_100_1682159258594">
-                (function (window, document) {
-                    var loader = function () {
-                        var arg = ["s=910107", "m=100", "uid=wg_fwdg_910107_100_1682159258594", "wj=knots", "tj=c", "waj=m", "odh=0", "doh=24", "fhours=96", "hrsm=2", "vt=forecasts", "lng=en", "idbs=1", "p=WINDSPD,GUST,SMER"];
-                        var script = document.createElement("script");
-                        var tag = document.getElementsByTagName("script")[0];
-                        script.src = "https://www.windguru.cz/js/widget.php?" + (arg.join("&"));
-                        tag.parentNode.insertBefore(script, tag);
-                    };
-                    window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
-                })(window, document);
-            </script>
-            <script id="wg_fwdg_885332_100_1628969744484">
-                (function (window, document) {
-                    var loader = function () {
-                        var arg = ["s=885332", "m=100", "uid=wg_fwdg_885332_100_1628969744484", "wj=knots", "tj=c", "waj=m", "odh=0", "doh=24", "fhours=96", "hrsm=2", "vt=forecasts", "lng=en", "idbs=1", "p=WINDSPD,GUST,SMER"];
-                        var script = document.createElement("script");
-                        var tag = document.getElementsByTagName("script")[0];
-                        script.src = "https://www.windguru.cz/js/widget.php?" + (arg.join("&"));
-                        tag.parentNode.insertBefore(script, tag);
-                    };
-                    window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
-                })(window, document);
-            </script>
-            <iframe id="waves_frame"
-                src="https://isramar.ocean.org.il/isramar2009/wave_model/ShowTimeSeries.aspx?x=35.0368&y=32.9151&model=wam&modeldate=2103030000&region=fine"
-                width="100%" height="470p" id="ContentPlaceHolder1_iframea" class="iframe_w"></iframe>
-            <script>
-                const d = moment().format('YYMMDD0000');
-                document.getElementById("waves_frame").src = `https://isramar.ocean.org.il/isramar2009/wave_model/ShowTimeSeries.aspx?x=35.0368&y=32.9151&model=wam&modeldate=${d}&region=fine`;
-            </script>
-        </div>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>
+   Surf Dashboard
+  </title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js">
+  </script>
+  <script crossorigin="anonymous" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" src="https://code.jquery.com/jquery-3.6.3.min.js">
+  </script>
+  <!-- Video.js for stream playback -->
+  <link href="https://unpkg.com/video.js/dist/video-js.css" rel="stylesheet"/>
+  <script src="https://unpkg.com/video.js/dist/video.js">
+  </script>
+  <link href="style.css" rel="stylesheet" type="text/css"/>
+ </head>
+ <body>
+  <nav class="navbar">
+   <div class="nav-container">
+    <a class="nav-link" href="#live-wind">
+     Live Wind
+    </a>
+    <a class="nav-link" href="#forecasts">
+     Forecasts
+    </a>
+    <a class="nav-link" href="#haifa-cams">
+     Haifa Cams
+    </a>
+    <a class="nav-link" href="#tlv-cams">
+     TLV Cams
+    </a>
+   </div>
+  </nav>
+  <main class="container">
+   <section class="dashboard-section" id="live-wind">
+    <h1 class="section-title">
+     Live Wind
+    </h1>
+    <div class="card">
+     <h2>
+      Bat Galim
+     </h2>
+     <iframe frameborder="0" id="live_wind_frame" marginheight="1" marginwidth="1" scrolling="no" src="https://widget.holfuy.com/?station=1113&amp;su=knots&amp;t=C&amp;lang=en&amp;mode=average&amp;avgrows=32">
+     </iframe>
     </div>
-
-</body>
+   </section>
+   <section class="dashboard-section" id="forecasts">
+    <h1 class="section-title">
+     Forecasts
+    </h1>
+    <div class="forecast-grid">
+     <!-- WindGuru Scripts -->
+     <div class="card forecast-card">
+      <h3>
+       WindGuru 1
+      </h3>
+      <div id="wg_target_1">
+      </div>
+      <script id="wg_fwdg_910107_100_1682159258594">
+       (function (window, document) {
+                            var loader = function () {
+                                var arg = ["s=910107", "m=100", "uid=wg_fwdg_910107_100_1682159258594", "wj=knots", "tj=c", "waj=m", "odh=0", "doh=24", "fhours=96", "hrsm=2", "vt=forecasts", "lng=en", "idbs=1", "p=WINDSPD,GUST,SMER"];
+                                var script = document.createElement("script");
+                                var tag = document.getElementsByTagName("script")[0];
+                                script.src = "https://www.windguru.cz/js/widget.php?" + (arg.join("&"));
+                                tag.parentNode.insertBefore(script, tag);
+                            };
+                            window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
+                        })(window, document);
+      </script>
+     </div>
+     <div class="card forecast-card">
+      <h3>
+       WindGuru 2
+      </h3>
+      <div id="wg_target_2">
+      </div>
+      <script id="wg_fwdg_885332_100_1628969744484">
+       (function (window, document) {
+                            var loader = function () {
+                                var arg = ["s=885332", "m=100", "uid=wg_fwdg_885332_100_1628969744484", "wj=knots", "tj=c", "waj=m", "odh=0", "doh=24", "fhours=96", "hrsm=2", "vt=forecasts", "lng=en", "idbs=1", "p=WINDSPD,GUST,SMER"];
+                                var script = document.createElement("script");
+                                var tag = document.getElementsByTagName("script")[0];
+                                script.src = "https://www.windguru.cz/js/widget.php?" + (arg.join("&"));
+                                tag.parentNode.insertBefore(script, tag);
+                            };
+                            window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
+                        })(window, document);
+      </script>
+     </div>
+     <div class="card forecast-card full-width">
+      <h3>
+       Isramar Wave Model
+      </h3>
+      <iframe class="responsive-iframe" id="waves_frame" src="https://isramar.ocean.org.il/isramar2009/wave_model/ShowTimeSeries.aspx?x=35.0368&amp;y=32.9151&amp;model=wam&amp;modeldate=2103030000®ion=fine">
+      </iframe>
+      <script>
+       const d = moment().format('YYMMDD0000');
+                        document.getElementById("waves_frame").src = `https://isramar.ocean.org.il/isramar2009/wave_model/ShowTimeSeries.aspx?x=35.0368&y=32.9151&model=wam&modeldate=${d}&region=fine`;
+      </script>
+     </div>
+    </div>
+   </section>
+   <section class="dashboard-section" id="haifa-cams">
+    <h1 class="section-title">
+     Haifa Cameras
+    </h1>
+    <!-- Python script will inject grid items here -->
+    <!-- <div class="grid-container"> -->
+    <!-- </div> -->
+    <div class="grid-container">
+     <div class="grid-item">
+      <iframe allowfullscreen="" autoplay="" src="https://g2.ipcamlive.com/player/player.php?alias=5ffd9eb29b665">
+      </iframe>
+     </div>
+     <div class="grid-item">
+      <iframe allowfullscreen="" autoplay="" src="https://g0.ipcamlive.com/player/player.php?alias=60acaa1aeee83">
+      </iframe>
+     </div>
+     <div class="grid-item">
+      <video class="video-js vjs-default-skin vjs-big-play-centered" controls="" id="bat-galim-cam" playsinline="" preload="auto">
+       <source src="https://s122.ipcamlive.com/streams/7adnibrys5z0dmten/stream.m3u8" type="application/x-mpegURL"/>
+      </video>
+     </div>
+     <div class="grid-item">
+      <video class="video-js vjs-default-skin vjs-big-play-centered" controls="" id="meridian-cam" playsinline="" preload="auto">
+       <source src="https://s34.ipcamlive.com/streams/222dcrcb8najknfs9/stream.m3u8" type="application/x-mpegURL"/>
+      </video>
+     </div>
+    </div>
+   </section>
+   <section class="dashboard-section" id="tlv-cams">
+    <h1 class="section-title">
+     Tel Aviv Cameras
+    </h1>
+    <!-- Python script will inject grid items here -->
+    <!-- <div class="grid-container"> -->
+    <!-- </div> -->
+    <div class="grid-container">
+     <div class="grid-item">
+      <video class="video-js vjs-default-skin vjs-big-play-centered" controls="" id="dolphinarium-cam" playsinline="" preload="auto">
+       <source src="https://s5.ipcamlive.com/streams/052u8czjshpvoakyi/stream.m3u8" type="application/x-mpegURL"/>
+      </video>
+     </div>
+     <div class="grid-item">
+      <video class="video-js vjs-default-skin vjs-big-play-centered" controls="" id="hilton-cam" playsinline="" preload="auto">
+       <source src="https://s5.ipcamlive.com/streams/05bfn2g0xhs8smkhe/stream.m3u8" type="application/x-mpegURL"/>
+      </video>
+     </div>
+     <div class="grid-item">
+      <video class="video-js vjs-default-skin vjs-big-play-centered" controls="" id="yafo-cam" playsinline="" preload="auto">
+       <source src="https://s34.ipcamlive.com/streams/22kyjznf2eowatx4p/stream.m3u8" type="application/x-mpegURL"/>
+      </video>
+     </div>
+    </div>
+   </section>
+  </main>
+  <footer>
+   <p>
+    Surf Dashboard ©
+    <script>
+     document.write(new Date().getFullYear())
+    </script>
+   </p>
+  </footer>
+  <script>
+   window.addEventListener('load', function() {
+  if(document.getElementById('bat-galim-cam')) { videojs('bat-galim-cam').play(); }
+  if(document.getElementById('meridian-cam')) { videojs('meridian-cam').play(); }
+  if(document.getElementById('dolphinarium-cam')) { videojs('dolphinarium-cam').play(); }
+  if(document.getElementById('hilton-cam')) { videojs('hilton-cam').play(); }
+  if(document.getElementById('yafo-cam')) { videojs('yafo-cam').play(); }
+});
+  </script>
+ </body>
+</html>
