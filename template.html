@@ -6,6 +6,7 @@
     <title>Surf Dashboard</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
     <!-- Video.js for stream playback -->
     <link href="https://unpkg.com/video.js/dist/video-js.css" rel="stylesheet">
@@ -17,30 +18,68 @@
 
     <nav class="navbar">
         <div class="nav-container">
-            <a href="#live-wind" class="nav-link">Live Wind</a>
-            <a href="#forecasts" class="nav-link">Forecasts</a>
-            <a href="#haifa-cams" class="nav-link">Haifa Cams</a>
-            <a href="#tlv-cams" class="nav-link">TLV Cams</a>
+            <a href="#haifa-section" class="nav-link">Haifa</a>
+            <a href="#tlv-section" class="nav-link">Tel Aviv</a>
+            <a href="#forecasts" class="nav-link">External Models</a>
         </div>
     </nav>
 
     <main class="container">
         
-        <section id="live-wind" class="dashboard-section">
-            <h1 class="section-title">Live Wind</h1>
+        <section id="haifa-section" class="dashboard-section">
+            <div class="section-header">
+                <h1 class="section-title">Haifa</h1>
+                <div id="haifa-swell-card" class="swell-summary-card">
+                    <!-- Swell data injected here -->
+                    <div class="swell-loading">Loading swell data...</div>
+                </div>
+            </div>
+        
+            <!-- Restored Live Wind -->
             <div class="card">
-                <h2>Bat Galim</h2>
+                <h3>Live Wind: Bat Galim</h3>
                 <iframe id="live_wind_frame" frameborder="0" marginheight="1" marginwidth="1" scrolling="no"
                     src="https://widget.holfuy.com/?station=1113&su=knots&t=C&lang=en&mode=average&avgrows=32"></iframe>
             </div>
-        </section>
+<div class="card forecast-chart-card">
+    <h3>24h Forecast</h3>
+    <div class="chart-container" style="position: relative; height:300px; width:100%">
+        <canvas id="haifaChart"></canvas>
+    </div>
+</div>
 
+<div id="haifa-cams-container">
+    <!-- Python script will inject grid items here -->
+</div>
+</section>
+
+<section id="tlv-section" class="dashboard-section">
+    <div class="section-header">
+        <h1 class="section-title">Tel Aviv</h1>
+        <div id="tlv-swell-card" class="swell-summary-card">
+            <!-- Swell data injected here -->
+            <div class="swell-loading">Loading swell data...</div>
+        </div>
+    </div>
+
+    <div class="card forecast-chart-card">
+        <h3>24h Forecast</h3>
+        <div class="chart-container" style="position: relative; height:300px; width:100%">
+            <canvas id="tlvChart"></canvas>
+        </div>
+    </div>
+
+    <div id="tlv-cams-container">
+        <!-- Python script will inject grid items here -->
+    </div>
+        </section>
+        
         <section id="forecasts" class="dashboard-section">
-            <h1 class="section-title">Forecasts</h1>
+            <h1 class="section-title">External Models</h1>
             <div class="forecast-grid">
-                <!-- WindGuru Scripts -->
+                <!-- Restored WindGuru -->
                 <div class="card forecast-card">
-                    <h3>WindGuru 1</h3>
+                    <h3>WindGuru: Atlit</h3>
                     <div id="wg_target_1"></div>
                     <script id="wg_fwdg_910107_100_1682159258594">
                         (function (window, document) {
@@ -57,7 +96,7 @@
                 </div>
 
                 <div class="card forecast-card">
-                    <h3>WindGuru 2</h3>
+                    <h3>WindGuru: Bat Galim</h3>
                     <div id="wg_target_2"></div>
                     <script id="wg_fwdg_885332_100_1628969744484">
                         (function (window, document) {
@@ -83,33 +122,6 @@
                     </script>
                 </div>
             </div>
-        </section>
-
-        <section id="haifa-cams" class="dashboard-section">
-            <div class="section-header">
-                <h1 class="section-title">Haifa Cameras</h1>
-                <div id="haifa-swell-card" class="swell-summary-card">
-                    <!-- Swell data injected here -->
-                    <div class="swell-loading">Loading swell data...</div>
-                </div>
-                </div>
-            <!-- Python script will inject grid items here -->
-            <!-- <div class="grid-container"> -->
-            <!-- </div> -->
-        </section>
-
-        <section id="tlv-cams" class="dashboard-section">
-            <div class="section-header">
-                <h1 class="section-title">Tel Aviv Cameras</h1>
-                <div id="tlv-swell-card" class="swell-summary-card">
-                    <!-- Swell data injected here -->
-                    <div class="swell-loading">Loading swell data...</div>
-                </div>
-                </div>
-
-            <!-- Python script will inject grid items here -->
-            <!-- <div class="grid-container"> -->
-            <!-- </div> -->
         </section>
 
     </main>

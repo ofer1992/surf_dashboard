@@ -7,7 +7,7 @@ import datetime
 
 def get_marine_forecast(lat, lon):
     """
-    Fetches marine weather data from Open-Meteo API.
+    Fetches marine weather data from Open-Meteo API (24h forecast).
     """
     url = "https://marine-api.open-meteo.com/v1/marine"
     params = {
@@ -22,7 +22,7 @@ def get_marine_forecast(lat, lon):
             "swell_wave_direction",
         ],
         "timezone": "auto",
-        "forecast_days": 1,
+        "forecast_days": 1,  # Next 24h
     }
     try:
         response = requests.get(url, params=params)
@@ -33,16 +33,13 @@ def get_marine_forecast(lat, lon):
         return None
 
 
-def format_forecast_data(data):
+def get_current_swell_data(data):
     """
-    Formats the raw API response into a simplified structure for the dashboard.
-    Extracts current hour's data.
+    Extracts current hour's data for the summary card.
     """
     if not data or "hourly" not in data:
         return None
 
-    # Get index for current hour (approximate)
-    # Open-Meteo returns hourly data starting from 00:00 of requested days
     current_hour = datetime.datetime.now().hour
 
     return {
@@ -52,13 +49,12 @@ def format_forecast_data(data):
         "swell_height": data["hourly"]["swell_wave_height"][current_hour],
         "swell_period": data["hourly"]["swell_wave_period"][current_hour],
         "swell_direction": data["hourly"]["swell_wave_direction"][current_hour],
-        "time": data["hourly"]["time"][current_hour],
     }
 
 
 def create_swell_card_content(soup, data):
     """
-    Generates HTML content for the swell card based on data.
+    Generates HTML content for the swell card.
     """
     if not data:
         return "Data Unavailable"
@@ -68,16 +64,12 @@ def create_swell_card_content(soup, data):
         attrs={"class": "swell-data-container", "style": "display: flex; gap: 15px;"},
     )
 
-    # Helper to create item
     def add_item(label, value, unit):
         item = soup.new_tag("div", attrs={"class": "swell-item"})
-
         lbl = soup.new_tag("div", attrs={"class": "swell-label"})
         lbl.string = label
-
         val = soup.new_tag("div", attrs={"class": "swell-value"})
         val.string = f"{value}{unit}"
-
         item.append(lbl)
         item.append(val)
         container.append(item)
@@ -91,10 +83,7 @@ def create_swell_card_content(soup, data):
 
 
 def create_video_tag(soup, id_name, stream_url):
-    """Creates a video-js tag for a given stream URL."""
     grid_item = soup.new_tag("div", attrs={"class": "grid-item"})
-
-    # Create video element
     vid = soup.new_tag(
         "video",
         id=f"{id_name}-cam",
@@ -105,30 +94,116 @@ def create_video_tag(soup, id_name, stream_url):
             "playsinline": "",
         },
     )
-
-    # Add source
     src = soup.new_tag("source", src=stream_url, type="application/x-mpegURL")
     vid.append(src)
     grid_item.append(vid)
-
     return grid_item
 
 
 def create_iframe_tag(soup, src_url):
-    """Creates an iframe tag (used for static Haifa cams)."""
     grid_item = soup.new_tag("div", attrs={"class": "grid-item"})
-    iframe = soup.new_tag(
-        "iframe", src=src_url, allowfullscreen="", autoplay=""
-    )  # attributes that don't need values
+    iframe = soup.new_tag("iframe", src=src_url, allowfullscreen="", autoplay="")
     grid_item.append(iframe)
     return grid_item
+
+
+def inject_chart_data(soup, haifa_data, tlv_data):
+    """
+    Injects the JavaScript to render charts with the fetched data.
+    """
+    script_content = """
+    document.addEventListener('DOMContentLoaded', function() {
+        function createChart(ctxId, label, labels, waveData, swellData) {
+            const ctx = document.getElementById(ctxId);
+            if (!ctx) return;
+            
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'Wave Height (m)',
+                            data: waveData,
+                            borderColor: 'rgba(0, 123, 255, 1)',
+                            backgroundColor: 'rgba(0, 123, 255, 0.1)',
+                            borderWidth: 2,
+                            fill: true,
+                            tension: 0.4
+                        },
+                        {
+                            label: 'Swell Height (m)',
+                            data: swellData,
+                            borderColor: 'rgba(40, 167, 69, 1)',
+                            backgroundColor: 'rgba(40, 167, 69, 0.1)',
+                            borderWidth: 2,
+                            borderDash: [5, 5],
+                            fill: true,
+                            tension: 0.4
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'top' },
+                        tooltip: { mode: 'index', intersect: false }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: { display: true, text: 'Height (m)' }
+                        },
+                        x: {
+                            ticks: { 
+                                maxTicksLimit: 8,
+                                autoSkip: true,
+                                maxRotation: 45,
+                                minRotation: 45
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Injected Data
+    """
+
+    # Format data for JS
+    def format_hourly(data):
+        if not data or "hourly" not in data:
+            return "[]", "[]", "[]"
+
+        # Format time as "Day HH:MM" for clarity
+        times = []
+        for t in data["hourly"]["time"]:
+            # t is ISO format "YYYY-MM-DDTHH:MM"
+            dt = datetime.datetime.fromisoformat(t)
+            times.append(dt.strftime("%d/%m %H:%M"))
+
+        waves = data["hourly"]["wave_height"]
+        swells = data["hourly"]["swell_wave_height"]
+        return json.dumps(times), json.dumps(waves), json.dumps(swells)
+
+    h_labels, h_waves, h_swells = format_hourly(haifa_data)
+    t_labels, t_waves, t_swells = format_hourly(tlv_data)
+
+    script_content += f"\n        createChart('haifaChart', 'Haifa Forecast', {h_labels}, {h_waves}, {h_swells});"
+    script_content += f"\n        createChart('tlvChart', 'TLV Forecast', {t_labels}, {t_waves}, {t_swells});"
+    script_content += "\n    });"
+
+    script_tag = soup.new_tag("script")
+    script_tag.string = script_content
+    soup.body.append(script_tag)
 
 
 def main():
     # Coordinates
     COORDS = {
-        "haifa": {"lat": 32.8304, "lon": 34.9745},  # Bat Galim approximate
-        "tlv": {"lat": 32.0853, "lon": 34.7818},  # Hilton/Tel Aviv
+        "haifa": {"lat": 32.8304, "lon": 34.9745},
+        "tlv": {"lat": 32.0853, "lon": 34.7818},
     }
 
     # Load Template
@@ -141,49 +216,49 @@ def main():
 
     soup = BeautifulSoup(template_content, "html.parser")
 
+    # Store fetched data for charts
+    forecast_data = {}
+
     # --- Fetch & Inject Swell Data ---
     for loc, coords in COORDS.items():
         print(f"Fetching swell data for {loc}...")
         raw_data = get_marine_forecast(coords["lat"], coords["lon"])
-        formatted_data = format_forecast_data(raw_data)
+        forecast_data[loc] = raw_data
 
+        # Summary Card
+        current_data = get_current_swell_data(raw_data)
         card_id = f"{loc}-swell-card"
         card_div = soup.find(id=card_id)
         if card_div:
-            # Clear loading text
             card_div.clear()
-            # Add new content
-            content = create_swell_card_content(soup, formatted_data)
+            content = create_swell_card_content(soup, current_data)
             if content == "Data Unavailable":
                 card_div.string = "Forecast Unavailable"
             else:
                 card_div.append(content)
+
+    # Inject Chart JS
+    inject_chart_data(soup, forecast_data.get("haifa"), forecast_data.get("tlv"))
 
     # Load Stream URLs
     stream_urls = {}
     if os.path.exists("stream_url.json"):
         with open("stream_url.json", "r") as f:
             stream_urls = json.load(f)
-    else:
-        print("Warning: stream_url.json not found. Only static cameras will be shown.")
 
     # --- Process Haifa Cams ---
-    haifa_container = soup.find(id="haifa-cams")
+    haifa_container = soup.find(id="haifa-cams-container")
     if haifa_container:
-        # Create a grid container
         grid = soup.new_tag("div", attrs={"class": "grid-container"})
         haifa_container.append(grid)
 
-        # 1. Static Hardcoded Cams (from original cams.py)
         static_haifa = [
-            "https://g2.ipcamlive.com/player/player.php?alias=5ffd9eb29b665",  # Bat Galim?
-            "https://g0.ipcamlive.com/player/player.php?alias=60acaa1aeee83",  # Meridian?
+            "https://g2.ipcamlive.com/player/player.php?alias=5ffd9eb29b665",
+            "https://g0.ipcamlive.com/player/player.php?alias=60acaa1aeee83",
         ]
         for url in static_haifa:
             grid.append(create_iframe_tag(soup, url))
 
-        # 2. Dynamic Cams (if any)
-        # Original code also checked stream_url.json for "bat-galim", "meridian"
         relevant_haifa = ["bat-galim", "meridian"]
         for name in relevant_haifa:
             if name in stream_urls:
@@ -191,9 +266,8 @@ def main():
                 grid.append(create_video_tag(soup, name, stream_urls[name]))
 
     # --- Process TLV Cams ---
-    tlv_container = soup.find(id="tlv-cams")
+    tlv_container = soup.find(id="tlv-cams-container")
     if tlv_container:
-        # Create a grid container
         grid = soup.new_tag("div", attrs={"class": "grid-container"})
         tlv_container.append(grid)
 
@@ -204,8 +278,6 @@ def main():
                 grid.append(create_video_tag(soup, name, stream_urls[name]))
 
     # --- Add Auto-Play Script ---
-    # We need to initialize the video-js players
-    # Collect all video IDs
     video_ids = [v["id"] for v in soup.find_all("video")]
     if video_ids:
         script_content = "window.addEventListener('load', function() {\n"

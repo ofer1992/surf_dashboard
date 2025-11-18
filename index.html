@@ -10,6 +10,8 @@
   </script>
   <script crossorigin="anonymous" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" src="https://code.jquery.com/jquery-3.6.3.min.js">
   </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js">
+  </script>
   <!-- Video.js for stream playback -->
   <link href="https://unpkg.com/video.js/dist/video-js.css" rel="stylesheet"/>
   <script src="https://unpkg.com/video.js/dist/video.js">
@@ -19,94 +21,22 @@
  <body>
   <nav class="navbar">
    <div class="nav-container">
-    <a class="nav-link" href="#live-wind">
-     Live Wind
+    <a class="nav-link" href="#haifa-section">
+     Haifa
+    </a>
+    <a class="nav-link" href="#tlv-section">
+     Tel Aviv
     </a>
     <a class="nav-link" href="#forecasts">
-     Forecasts
-    </a>
-    <a class="nav-link" href="#haifa-cams">
-     Haifa Cams
-    </a>
-    <a class="nav-link" href="#tlv-cams">
-     TLV Cams
+     External Models
     </a>
    </div>
   </nav>
   <main class="container">
-   <section class="dashboard-section" id="live-wind">
-    <h1 class="section-title">
-     Live Wind
-    </h1>
-    <div class="card">
-     <h2>
-      Bat Galim
-     </h2>
-     <iframe frameborder="0" id="live_wind_frame" marginheight="1" marginwidth="1" scrolling="no" src="https://widget.holfuy.com/?station=1113&amp;su=knots&amp;t=C&amp;lang=en&amp;mode=average&amp;avgrows=32">
-     </iframe>
-    </div>
-   </section>
-   <section class="dashboard-section" id="forecasts">
-    <h1 class="section-title">
-     Forecasts
-    </h1>
-    <div class="forecast-grid">
-     <!-- WindGuru Scripts -->
-     <div class="card forecast-card">
-      <h3>
-       WindGuru 1
-      </h3>
-      <div id="wg_target_1">
-      </div>
-      <script id="wg_fwdg_910107_100_1682159258594">
-       (function (window, document) {
-                            var loader = function () {
-                                var arg = ["s=910107", "m=100", "uid=wg_fwdg_910107_100_1682159258594", "wj=knots", "tj=c", "waj=m", "odh=0", "doh=24", "fhours=96", "hrsm=2", "vt=forecasts", "lng=en", "idbs=1", "p=WINDSPD,GUST,SMER"];
-                                var script = document.createElement("script");
-                                var tag = document.getElementsByTagName("script")[0];
-                                script.src = "https://www.windguru.cz/js/widget.php?" + (arg.join("&"));
-                                tag.parentNode.insertBefore(script, tag);
-                            };
-                            window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
-                        })(window, document);
-      </script>
-     </div>
-     <div class="card forecast-card">
-      <h3>
-       WindGuru 2
-      </h3>
-      <div id="wg_target_2">
-      </div>
-      <script id="wg_fwdg_885332_100_1628969744484">
-       (function (window, document) {
-                            var loader = function () {
-                                var arg = ["s=885332", "m=100", "uid=wg_fwdg_885332_100_1628969744484", "wj=knots", "tj=c", "waj=m", "odh=0", "doh=24", "fhours=96", "hrsm=2", "vt=forecasts", "lng=en", "idbs=1", "p=WINDSPD,GUST,SMER"];
-                                var script = document.createElement("script");
-                                var tag = document.getElementsByTagName("script")[0];
-                                script.src = "https://www.windguru.cz/js/widget.php?" + (arg.join("&"));
-                                tag.parentNode.insertBefore(script, tag);
-                            };
-                            window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
-                        })(window, document);
-      </script>
-     </div>
-     <div class="card forecast-card full-width">
-      <h3>
-       Isramar Wave Model
-      </h3>
-      <iframe class="responsive-iframe" id="waves_frame" src="https://isramar.ocean.org.il/isramar2009/wave_model/ShowTimeSeries.aspx?x=35.0368&amp;y=32.9151&amp;model=wam&amp;modeldate=2103030000®ion=fine">
-      </iframe>
-      <script>
-       const d = moment().format('YYMMDD0000');
-                        document.getElementById("waves_frame").src = `https://isramar.ocean.org.il/isramar2009/wave_model/ShowTimeSeries.aspx?x=35.0368&y=32.9151&model=wam&modeldate=${d}&region=fine`;
-      </script>
-     </div>
-    </div>
-   </section>
-   <section class="dashboard-section" id="haifa-cams">
+   <section class="dashboard-section" id="haifa-section">
     <div class="section-header">
      <h1 class="section-title">
-      Haifa Cameras
+      Haifa
      </h1>
      <div class="swell-summary-card" id="haifa-swell-card">
       <div class="swell-data-container" style="display: flex; gap: 15px;">
@@ -145,34 +75,51 @@
       </div>
      </div>
     </div>
-    <!-- Python script will inject grid items here -->
-    <!-- <div class="grid-container"> -->
-    <!-- </div> -->
-    <div class="grid-container">
-     <div class="grid-item">
-      <iframe allowfullscreen="" autoplay="" src="https://g2.ipcamlive.com/player/player.php?alias=5ffd9eb29b665">
-      </iframe>
+    <!-- Restored Live Wind -->
+    <div class="card">
+     <h3>
+      Live Wind: Bat Galim
+     </h3>
+     <iframe frameborder="0" id="live_wind_frame" marginheight="1" marginwidth="1" scrolling="no" src="https://widget.holfuy.com/?station=1113&amp;su=knots&amp;t=C&amp;lang=en&amp;mode=average&amp;avgrows=32">
+     </iframe>
+    </div>
+    <div class="card forecast-chart-card">
+     <h3>
+      24h Forecast
+     </h3>
+     <div class="chart-container" style="position: relative; height:300px; width:100%">
+      <canvas id="haifaChart">
+      </canvas>
      </div>
-     <div class="grid-item">
-      <iframe allowfullscreen="" autoplay="" src="https://g0.ipcamlive.com/player/player.php?alias=60acaa1aeee83">
-      </iframe>
-     </div>
-     <div class="grid-item">
-      <video class="video-js vjs-default-skin vjs-big-play-centered" controls="" id="bat-galim-cam" playsinline="" preload="auto">
-       <source src="https://s122.ipcamlive.com/streams/7adnibrys5z0dmten/stream.m3u8" type="application/x-mpegURL"/>
-      </video>
-     </div>
-     <div class="grid-item">
-      <video class="video-js vjs-default-skin vjs-big-play-centered" controls="" id="meridian-cam" playsinline="" preload="auto">
-       <source src="https://s34.ipcamlive.com/streams/222dcrcb8najknfs9/stream.m3u8" type="application/x-mpegURL"/>
-      </video>
+    </div>
+    <div id="haifa-cams-container">
+     <!-- Python script will inject grid items here -->
+     <div class="grid-container">
+      <div class="grid-item">
+       <iframe allowfullscreen="" autoplay="" src="https://g2.ipcamlive.com/player/player.php?alias=5ffd9eb29b665">
+       </iframe>
+      </div>
+      <div class="grid-item">
+       <iframe allowfullscreen="" autoplay="" src="https://g0.ipcamlive.com/player/player.php?alias=60acaa1aeee83">
+       </iframe>
+      </div>
+      <div class="grid-item">
+       <video class="video-js vjs-default-skin vjs-big-play-centered" controls="" id="bat-galim-cam" playsinline="" preload="auto">
+        <source src="https://s122.ipcamlive.com/streams/7adnibrys5z0dmten/stream.m3u8" type="application/x-mpegURL"/>
+       </video>
+      </div>
+      <div class="grid-item">
+       <video class="video-js vjs-default-skin vjs-big-play-centered" controls="" id="meridian-cam" playsinline="" preload="auto">
+        <source src="https://s34.ipcamlive.com/streams/222dcrcb8najknfs9/stream.m3u8" type="application/x-mpegURL"/>
+       </video>
+      </div>
      </div>
     </div>
    </section>
-   <section class="dashboard-section" id="tlv-cams">
+   <section class="dashboard-section" id="tlv-section">
     <div class="section-header">
      <h1 class="section-title">
-      Tel Aviv Cameras
+      Tel Aviv
      </h1>
      <div class="swell-summary-card" id="tlv-swell-card">
       <div class="swell-data-container" style="display: flex; gap: 15px;">
@@ -211,24 +158,90 @@
       </div>
      </div>
     </div>
-    <!-- Python script will inject grid items here -->
-    <!-- <div class="grid-container"> -->
-    <!-- </div> -->
-    <div class="grid-container">
-     <div class="grid-item">
-      <video class="video-js vjs-default-skin vjs-big-play-centered" controls="" id="dolphinarium-cam" playsinline="" preload="auto">
-       <source src="https://s5.ipcamlive.com/streams/052u8czjshpvoakyi/stream.m3u8" type="application/x-mpegURL"/>
-      </video>
+    <div class="card forecast-chart-card">
+     <h3>
+      24h Forecast
+     </h3>
+     <div class="chart-container" style="position: relative; height:300px; width:100%">
+      <canvas id="tlvChart">
+      </canvas>
      </div>
-     <div class="grid-item">
-      <video class="video-js vjs-default-skin vjs-big-play-centered" controls="" id="hilton-cam" playsinline="" preload="auto">
-       <source src="https://s5.ipcamlive.com/streams/05bfn2g0xhs8smkhe/stream.m3u8" type="application/x-mpegURL"/>
-      </video>
+    </div>
+    <div id="tlv-cams-container">
+     <!-- Python script will inject grid items here -->
+     <div class="grid-container">
+      <div class="grid-item">
+       <video class="video-js vjs-default-skin vjs-big-play-centered" controls="" id="dolphinarium-cam" playsinline="" preload="auto">
+        <source src="https://s5.ipcamlive.com/streams/052u8czjshpvoakyi/stream.m3u8" type="application/x-mpegURL"/>
+       </video>
+      </div>
+      <div class="grid-item">
+       <video class="video-js vjs-default-skin vjs-big-play-centered" controls="" id="hilton-cam" playsinline="" preload="auto">
+        <source src="https://s5.ipcamlive.com/streams/05bfn2g0xhs8smkhe/stream.m3u8" type="application/x-mpegURL"/>
+       </video>
+      </div>
+      <div class="grid-item">
+       <video class="video-js vjs-default-skin vjs-big-play-centered" controls="" id="yafo-cam" playsinline="" preload="auto">
+        <source src="https://s34.ipcamlive.com/streams/22kyjznf2eowatx4p/stream.m3u8" type="application/x-mpegURL"/>
+       </video>
+      </div>
      </div>
-     <div class="grid-item">
-      <video class="video-js vjs-default-skin vjs-big-play-centered" controls="" id="yafo-cam" playsinline="" preload="auto">
-       <source src="https://s34.ipcamlive.com/streams/22kyjznf2eowatx4p/stream.m3u8" type="application/x-mpegURL"/>
-      </video>
+    </div>
+   </section>
+   <section class="dashboard-section" id="forecasts">
+    <h1 class="section-title">
+     External Models
+    </h1>
+    <div class="forecast-grid">
+     <!-- Restored WindGuru -->
+     <div class="card forecast-card">
+      <h3>
+       WindGuru: Atlit
+      </h3>
+      <div id="wg_target_1">
+      </div>
+      <script id="wg_fwdg_910107_100_1682159258594">
+       (function (window, document) {
+                            var loader = function () {
+                                var arg = ["s=910107", "m=100", "uid=wg_fwdg_910107_100_1682159258594", "wj=knots", "tj=c", "waj=m", "odh=0", "doh=24", "fhours=96", "hrsm=2", "vt=forecasts", "lng=en", "idbs=1", "p=WINDSPD,GUST,SMER"];
+                                var script = document.createElement("script");
+                                var tag = document.getElementsByTagName("script")[0];
+                                script.src = "https://www.windguru.cz/js/widget.php?" + (arg.join("&"));
+                                tag.parentNode.insertBefore(script, tag);
+                            };
+                            window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
+                        })(window, document);
+      </script>
+     </div>
+     <div class="card forecast-card">
+      <h3>
+       WindGuru: Bat Galim
+      </h3>
+      <div id="wg_target_2">
+      </div>
+      <script id="wg_fwdg_885332_100_1628969744484">
+       (function (window, document) {
+                            var loader = function () {
+                                var arg = ["s=885332", "m=100", "uid=wg_fwdg_885332_100_1628969744484", "wj=knots", "tj=c", "waj=m", "odh=0", "doh=24", "fhours=96", "hrsm=2", "vt=forecasts", "lng=en", "idbs=1", "p=WINDSPD,GUST,SMER"];
+                                var script = document.createElement("script");
+                                var tag = document.getElementsByTagName("script")[0];
+                                script.src = "https://www.windguru.cz/js/widget.php?" + (arg.join("&"));
+                                tag.parentNode.insertBefore(script, tag);
+                            };
+                            window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
+                        })(window, document);
+      </script>
+     </div>
+     <div class="card forecast-card full-width">
+      <h3>
+       Isramar Wave Model
+      </h3>
+      <iframe class="responsive-iframe" id="waves_frame" src="https://isramar.ocean.org.il/isramar2009/wave_model/ShowTimeSeries.aspx?x=35.0368&amp;y=32.9151&amp;model=wam&amp;modeldate=2103030000®ion=fine">
+      </iframe>
+      <script>
+       const d = moment().format('YYMMDD0000');
+                        document.getElementById("waves_frame").src = `https://isramar.ocean.org.il/isramar2009/wave_model/ShowTimeSeries.aspx?x=35.0368&y=32.9151&model=wam&modeldate=${d}&region=fine`;
+      </script>
      </div>
     </div>
    </section>
@@ -241,6 +254,69 @@
     </script>
    </p>
   </footer>
+  <script>
+   document.addEventListener('DOMContentLoaded', function() {
+        function createChart(ctxId, label, labels, waveData, swellData) {
+            const ctx = document.getElementById(ctxId);
+            if (!ctx) return;
+            
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'Wave Height (m)',
+                            data: waveData,
+                            borderColor: 'rgba(0, 123, 255, 1)',
+                            backgroundColor: 'rgba(0, 123, 255, 0.1)',
+                            borderWidth: 2,
+                            fill: true,
+                            tension: 0.4
+                        },
+                        {
+                            label: 'Swell Height (m)',
+                            data: swellData,
+                            borderColor: 'rgba(40, 167, 69, 1)',
+                            backgroundColor: 'rgba(40, 167, 69, 0.1)',
+                            borderWidth: 2,
+                            borderDash: [5, 5],
+                            fill: true,
+                            tension: 0.4
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'top' },
+                        tooltip: { mode: 'index', intersect: false }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: { display: true, text: 'Height (m)' }
+                        },
+                        x: {
+                            ticks: { 
+                                maxTicksLimit: 8,
+                                autoSkip: true,
+                                maxRotation: 45,
+                                minRotation: 45
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Injected Data
+    
+        createChart('haifaChart', 'Haifa Forecast', ["18/11 00:00", "18/11 01:00", "18/11 02:00", "18/11 03:00", "18/11 04:00", "18/11 05:00", "18/11 06:00", "18/11 07:00", "18/11 08:00", "18/11 09:00", "18/11 10:00", "18/11 11:00", "18/11 12:00", "18/11 13:00", "18/11 14:00", "18/11 15:00", "18/11 16:00", "18/11 17:00", "18/11 18:00", "18/11 19:00", "18/11 20:00", "18/11 21:00", "18/11 22:00", "18/11 23:00"], [0.64, 0.64, 0.64, 0.64, 0.66, 0.66, 0.7, 0.76, 0.8, 0.82, 0.82, 0.84, 0.78, 0.72, 0.66, 0.62, 0.56, 0.52, 0.52, 0.52, 0.52, 0.56, 0.62, 0.66], [0.4, 0.4, 0.38, 0.38, 0.36, 0.36, 0.34, 0.34, 0.32, 0.32, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.32, 0.34, 0.36, 0.38, 0.4, 0.42]);
+        createChart('tlvChart', 'TLV Forecast', ["18/11 00:00", "18/11 01:00", "18/11 02:00", "18/11 03:00", "18/11 04:00", "18/11 05:00", "18/11 06:00", "18/11 07:00", "18/11 08:00", "18/11 09:00", "18/11 10:00", "18/11 11:00", "18/11 12:00", "18/11 13:00", "18/11 14:00", "18/11 15:00", "18/11 16:00", "18/11 17:00", "18/11 18:00", "18/11 19:00", "18/11 20:00", "18/11 21:00", "18/11 22:00", "18/11 23:00"], [0.66, 0.64, 0.64, 0.62, 0.6, 0.58, 0.56, 0.54, 0.52, 0.5, 0.5, 0.48, 0.46, 0.44, 0.42, 0.42, 0.4, 0.4, 0.4, 0.38, 0.38, 0.38, 0.38, 0.38], [0.46, 0.46, 0.48, 0.46, 0.46, 0.44, 0.42, 0.4, 0.38, 0.38, 0.36, 0.36, 0.34, 0.32, 0.3, 0.3, 0.3, 0.3, 0.28, 0.28, 0.26, 0.26, 0.26, 0.26]);
+    });
+  </script>
   <script>
    window.addEventListener('load', function() {
   if(document.getElementById('bat-galim-cam')) { videojs('bat-galim-cam').play(); }
