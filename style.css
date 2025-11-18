@@ -63,12 +63,52 @@ body {
     scroll-margin-top: 80px; /* Adjust for sticky header offset when linking */
 }
 
-.section-title {
-    font-size: 1.8rem;
+.section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
     margin-bottom: 20px;
     border-bottom: 3px solid var(--accent-color);
-    display: inline-block;
+}
+
+.section-title {
+    font-size: 1.8rem;
+    margin-bottom: 5px;
+    border-bottom: none; /* Removed from here, moved to header container */
     padding-bottom: 5px;
+    margin-right: 20px;
+}
+
+/* Swell Summary Card */
+.swell-summary-card {
+    background: var(--accent-color);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    box-shadow: var(--shadow);
+    margin-bottom: 10px;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.swell-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.swell-label {
+    font-size: 0.7rem;
+    opacity: 0.9;
+    text-transform: uppercase;
+}
+
+.swell-value {
+    font-weight: bold;
+    font-size: 1.1rem;
 }
 
 /* Cards */
@@ -79,6 +119,15 @@ body {
     padding: 20px;
     margin-bottom: 20px;
     overflow: hidden;
+}
+
+/* Forecast Card with overflow handling */
+.forecast-card {
+    background: var(--card-bg);
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    padding: 20px;
+    overflow-x: auto; /* Horizontal scroll for wide widgets */
 }
 
 .card h2, .card h3 {
@@ -162,5 +211,10 @@ footer {
     
     .section-title {
         font-size: 1.5rem;
+    }
+    
+    .swell-summary-card {
+        width: 100%;
+        justify-content: space-around;
     }
 }

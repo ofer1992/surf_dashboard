@@ -1,6 +1,93 @@
 from bs4 import BeautifulSoup
 import json
 import os
+import requests
+import datetime
+
+
+def get_marine_forecast(lat, lon):
+    """
+    Fetches marine weather data from Open-Meteo API.
+    """
+    url = "https://marine-api.open-meteo.com/v1/marine"
+    params = {
+        "latitude": lat,
+        "longitude": lon,
+        "hourly": [
+            "wave_height",
+            "wave_period",
+            "wave_direction",
+            "swell_wave_height",
+            "swell_wave_period",
+            "swell_wave_direction",
+        ],
+        "timezone": "auto",
+        "forecast_days": 1,
+    }
+    try:
+        response = requests.get(url, params=params)
+        response.raise_for_status()
+        return response.json()
+    except Exception as e:
+        print(f"Error fetching data: {e}")
+        return None
+
+
+def format_forecast_data(data):
+    """
+    Formats the raw API response into a simplified structure for the dashboard.
+    Extracts current hour's data.
+    """
+    if not data or "hourly" not in data:
+        return None
+
+    # Get index for current hour (approximate)
+    # Open-Meteo returns hourly data starting from 00:00 of requested days
+    current_hour = datetime.datetime.now().hour
+
+    return {
+        "wave_height": data["hourly"]["wave_height"][current_hour],
+        "wave_period": data["hourly"]["wave_period"][current_hour],
+        "wave_direction": data["hourly"]["wave_direction"][current_hour],
+        "swell_height": data["hourly"]["swell_wave_height"][current_hour],
+        "swell_period": data["hourly"]["swell_wave_period"][current_hour],
+        "swell_direction": data["hourly"]["swell_wave_direction"][current_hour],
+        "time": data["hourly"]["time"][current_hour],
+    }
+
+
+def create_swell_card_content(soup, data):
+    """
+    Generates HTML content for the swell card based on data.
+    """
+    if not data:
+        return "Data Unavailable"
+
+    container = soup.new_tag(
+        "div",
+        attrs={"class": "swell-data-container", "style": "display: flex; gap: 15px;"},
+    )
+
+    # Helper to create item
+    def add_item(label, value, unit):
+        item = soup.new_tag("div", attrs={"class": "swell-item"})
+
+        lbl = soup.new_tag("div", attrs={"class": "swell-label"})
+        lbl.string = label
+
+        val = soup.new_tag("div", attrs={"class": "swell-value"})
+        val.string = f"{value}{unit}"
+
+        item.append(lbl)
+        item.append(val)
+        container.append(item)
+
+    add_item("Wave Height", data["wave_height"], "m")
+    add_item("Swell", data["swell_height"], "m")
+    add_item("Period", data["swell_period"], "s")
+    add_item("Dir", data["swell_direction"], "°")
+
+    return container
 
 
 def create_video_tag(soup, id_name, stream_url):
@@ -38,6 +125,12 @@ def create_iframe_tag(soup, src_url):
 
 
 def main():
+    # Coordinates
+    COORDS = {
+        "haifa": {"lat": 32.8304, "lon": 34.9745},  # Bat Galim approximate
+        "tlv": {"lat": 32.0853, "lon": 34.7818},  # Hilton/Tel Aviv
+    }
+
     # Load Template
     if not os.path.exists("template.html"):
         print("Error: template.html not found.")
@@ -47,6 +140,24 @@ def main():
         template_content = f.read()
 
     soup = BeautifulSoup(template_content, "html.parser")
+
+    # --- Fetch & Inject Swell Data ---
+    for loc, coords in COORDS.items():
+        print(f"Fetching swell data for {loc}...")
+        raw_data = get_marine_forecast(coords["lat"], coords["lon"])
+        formatted_data = format_forecast_data(raw_data)
+
+        card_id = f"{loc}-swell-card"
+        card_div = soup.find(id=card_id)
+        if card_div:
+            # Clear loading text
+            card_div.clear()
+            # Add new content
+            content = create_swell_card_content(soup, formatted_data)
+            if content == "Data Unavailable":
+                card_div.string = "Forecast Unavailable"
+            else:
+                card_div.append(content)
 
     # Load Stream URLs
     stream_urls = {}
