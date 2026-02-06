@@ -277,6 +277,20 @@ def main():
                 print(f"Adding dynamic stream for {name}")
                 grid.append(create_video_tag(soup, name, stream_urls[name]))
 
+        # TLV municipality live beach cameras
+        municipality_tlv = [
+            "https://streaming.therdteam.com/live/play.html?id=10006",  # Yafo North
+            "https://streaming.therdteam.com/live/play.html?id=10004",  # Aviv Beach
+            "https://streaming.therdteam.com/live/play.html?id=10005",  # Yafo South
+            "https://streaming.therdteam.com/live/play.html?id=10007",  # Goldman
+            "https://streaming.therdteam.com/live/play.html?id=10001",  # Gordon South
+            "https://streaming.therdteam.com/live/play.html?id=10000",  # Gordon North
+            "https://streaming.therdteam.com/live/play.html?id=10002",  # Hilton North
+            "https://streaming.therdteam.com/live/play.html?id=10003",  # Hilton South
+        ]
+        for url in municipality_tlv:
+            grid.append(create_iframe_tag(soup, url))
+
     # --- Add Auto-Play Script ---
     video_ids = [v["id"] for v in soup.find_all("video")]
     if video_ids:

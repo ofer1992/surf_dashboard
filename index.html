@@ -10,6 +10,8 @@
   </script>
   <script crossorigin="anonymous" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" src="https://code.jquery.com/jquery-3.6.3.min.js">
   </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js">
+  </script>
   <!-- Video.js for stream playback -->
   <link href="https://unpkg.com/video.js/dist/video-js.css" rel="stylesheet"/>
   <script src="https://unpkg.com/video.js/dist/video.js">
@@ -19,42 +21,214 @@
  <body>
   <nav class="navbar">
    <div class="nav-container">
-    <a class="nav-link" href="#live-wind">
-     Live Wind
+    <a class="nav-link" href="#haifa-section">
+     Haifa
+    </a>
+    <a class="nav-link" href="#tlv-section">
+     Tel Aviv
     </a>
     <a class="nav-link" href="#forecasts">
-     Forecasts
-    </a>
-    <a class="nav-link" href="#haifa-cams">
-     Haifa Cams
-    </a>
-    <a class="nav-link" href="#tlv-cams">
-     TLV Cams
+     External Models
     </a>
    </div>
   </nav>
   <main class="container">
-   <section class="dashboard-section" id="live-wind">
-    <h1 class="section-title">
-     Live Wind
-    </h1>
+   <section class="dashboard-section" id="haifa-section">
+    <div class="section-header">
+     <h1 class="section-title">
+      Haifa
+     </h1>
+     <div class="swell-summary-card" id="haifa-swell-card">
+      <div class="swell-data-container" style="display: flex; gap: 15px;">
+       <div class="swell-item">
+        <div class="swell-label">
+         Wave Height
+        </div>
+        <div class="swell-value">
+         0.36m
+        </div>
+       </div>
+       <div class="swell-item">
+        <div class="swell-label">
+         Swell
+        </div>
+        <div class="swell-value">
+         0.22m
+        </div>
+       </div>
+       <div class="swell-item">
+        <div class="swell-label">
+         Period
+        </div>
+        <div class="swell-value">
+         4.8s
+        </div>
+       </div>
+       <div class="swell-item">
+        <div class="swell-label">
+         Dir
+        </div>
+        <div class="swell-value">
+         319°
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+    <!-- Restored Live Wind -->
     <div class="card">
-     <h2>
-      Bat Galim
-     </h2>
+     <h3>
+      Live Wind: Bat Galim
+     </h3>
      <iframe frameborder="0" id="live_wind_frame" marginheight="1" marginwidth="1" scrolling="no" src="https://widget.holfuy.com/?station=1113&amp;su=knots&amp;t=C&amp;lang=en&amp;mode=average&amp;avgrows=32">
      </iframe>
+    </div>
+    <div class="card forecast-chart-card">
+     <h3>
+      24h Forecast
+     </h3>
+     <div class="chart-container" style="position: relative; height:300px; width:100%">
+      <canvas id="haifaChart">
+      </canvas>
+     </div>
+    </div>
+    <div id="haifa-cams-container">
+     <!-- Python script will inject grid items here -->
+     <div class="grid-container">
+      <div class="grid-item">
+       <iframe allowfullscreen="" autoplay="" src="https://g2.ipcamlive.com/player/player.php?alias=5ffd9eb29b665">
+       </iframe>
+      </div>
+      <div class="grid-item">
+       <iframe allowfullscreen="" autoplay="" src="https://g0.ipcamlive.com/player/player.php?alias=60acaa1aeee83">
+       </iframe>
+      </div>
+      <div class="grid-item">
+       <video class="video-js vjs-default-skin vjs-big-play-centered" controls="" id="bat-galim-cam" playsinline="" preload="auto">
+        <source src="https://s34.ipcamlive.com/streams/22mm3r9kf2ahyj1zo/stream.m3u8" type="application/x-mpegURL"/>
+       </video>
+      </div>
+      <div class="grid-item">
+       <video class="video-js vjs-default-skin vjs-big-play-centered" controls="" id="meridian-cam" playsinline="" preload="auto">
+        <source src="https://s75.ipcamlive.com/streams/4bej4nl59hr8ibvay/stream.m3u8" type="application/x-mpegURL"/>
+       </video>
+      </div>
+     </div>
+    </div>
+   </section>
+   <section class="dashboard-section" id="tlv-section">
+    <div class="section-header">
+     <h1 class="section-title">
+      Tel Aviv
+     </h1>
+     <div class="swell-summary-card" id="tlv-swell-card">
+      <div class="swell-data-container" style="display: flex; gap: 15px;">
+       <div class="swell-item">
+        <div class="swell-label">
+         Wave Height
+        </div>
+        <div class="swell-value">
+         0.32m
+        </div>
+       </div>
+       <div class="swell-item">
+        <div class="swell-label">
+         Swell
+        </div>
+        <div class="swell-value">
+         0.22m
+        </div>
+       </div>
+       <div class="swell-item">
+        <div class="swell-label">
+         Period
+        </div>
+        <div class="swell-value">
+         5.15s
+        </div>
+       </div>
+       <div class="swell-item">
+        <div class="swell-label">
+         Dir
+        </div>
+        <div class="swell-value">
+         292°
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+    <div class="card forecast-chart-card">
+     <h3>
+      24h Forecast
+     </h3>
+     <div class="chart-container" style="position: relative; height:300px; width:100%">
+      <canvas id="tlvChart">
+      </canvas>
+     </div>
+    </div>
+    <div id="tlv-cams-container">
+     <!-- Python script will inject grid items here -->
+     <div class="grid-container">
+      <div class="grid-item">
+       <video class="video-js vjs-default-skin vjs-big-play-centered" controls="" id="dolphinarium-cam" playsinline="" preload="auto">
+        <source src="https://s68.ipcamlive.com/streams/44ld3v4j5krfngige/stream.m3u8" type="application/x-mpegURL"/>
+       </video>
+      </div>
+      <div class="grid-item">
+       <video class="video-js vjs-default-skin vjs-big-play-centered" controls="" id="hilton-cam" playsinline="" preload="auto">
+        <source src="https://s46.ipcamlive.com/streams/2eb7qjn5igupz8qap/stream.m3u8" type="application/x-mpegURL"/>
+       </video>
+      </div>
+      <div class="grid-item">
+       <video class="video-js vjs-default-skin vjs-big-play-centered" controls="" id="yafo-cam" playsinline="" preload="auto">
+        <source src="https://s122.ipcamlive.com/streams/7aqoed5ytrz0b6qkx/stream.m3u8" type="application/x-mpegURL"/>
+       </video>
+      </div>
+      <div class="grid-item">
+       <iframe allowfullscreen="" autoplay="" src="https://streaming.therdteam.com/live/play.html?id=10006">
+       </iframe>
+      </div>
+      <div class="grid-item">
+       <iframe allowfullscreen="" autoplay="" src="https://streaming.therdteam.com/live/play.html?id=10004">
+       </iframe>
+      </div>
+      <div class="grid-item">
+       <iframe allowfullscreen="" autoplay="" src="https://streaming.therdteam.com/live/play.html?id=10005">
+       </iframe>
+      </div>
+      <div class="grid-item">
+       <iframe allowfullscreen="" autoplay="" src="https://streaming.therdteam.com/live/play.html?id=10007">
+       </iframe>
+      </div>
+      <div class="grid-item">
+       <iframe allowfullscreen="" autoplay="" src="https://streaming.therdteam.com/live/play.html?id=10001">
+       </iframe>
+      </div>
+      <div class="grid-item">
+       <iframe allowfullscreen="" autoplay="" src="https://streaming.therdteam.com/live/play.html?id=10000">
+       </iframe>
+      </div>
+      <div class="grid-item">
+       <iframe allowfullscreen="" autoplay="" src="https://streaming.therdteam.com/live/play.html?id=10002">
+       </iframe>
+      </div>
+      <div class="grid-item">
+       <iframe allowfullscreen="" autoplay="" src="https://streaming.therdteam.com/live/play.html?id=10003">
+       </iframe>
+      </div>
+     </div>
     </div>
    </section>
    <section class="dashboard-section" id="forecasts">
     <h1 class="section-title">
-     Forecasts
+     External Models
     </h1>
     <div class="forecast-grid">
-     <!-- WindGuru Scripts -->
+     <!-- Restored WindGuru -->
      <div class="card forecast-card">
       <h3>
-       WindGuru 1
+       WindGuru: Atlit
       </h3>
       <div id="wg_target_1">
       </div>
@@ -73,7 +247,7 @@
      </div>
      <div class="card forecast-card">
       <h3>
-       WindGuru 2
+       WindGuru: Bat Galim
       </h3>
       <div id="wg_target_2">
       </div>
@@ -103,135 +277,6 @@
      </div>
     </div>
    </section>
-   <section class="dashboard-section" id="haifa-cams">
-    <div class="section-header">
-     <h1 class="section-title">
-      Haifa Cameras
-     </h1>
-     <div class="swell-summary-card" id="haifa-swell-card">
-      <div class="swell-data-container" style="display: flex; gap: 15px;">
-       <div class="swell-item">
-        <div class="swell-label">
-         Wave Height
-        </div>
-        <div class="swell-value">
-         0.36m
-        </div>
-       </div>
-       <div class="swell-item">
-        <div class="swell-label">
-         Swell
-        </div>
-        <div class="swell-value">
-         0.26m
-        </div>
-       </div>
-       <div class="swell-item">
-        <div class="swell-label">
-         Period
-        </div>
-        <div class="swell-value">
-         5.15s
-        </div>
-       </div>
-       <div class="swell-item">
-        <div class="swell-label">
-         Dir
-        </div>
-        <div class="swell-value">
-         279°
-        </div>
-       </div>
-      </div>
-     </div>
-    </div>
-    <!-- Python script will inject grid items here -->
-    <!-- <div class="grid-container"> -->
-    <!-- </div> -->
-    <div class="grid-container">
-     <div class="grid-item">
-      <iframe allowfullscreen="" autoplay="" src="https://g2.ipcamlive.com/player/player.php?alias=5ffd9eb29b665">
-      </iframe>
-     </div>
-     <div class="grid-item">
-      <iframe allowfullscreen="" autoplay="" src="https://g0.ipcamlive.com/player/player.php?alias=60acaa1aeee83">
-      </iframe>
-     </div>
-     <div class="grid-item">
-      <video class="video-js vjs-default-skin vjs-big-play-centered" controls="" id="bat-galim-cam" playsinline="" preload="auto">
-       <source src="https://s34.ipcamlive.com/streams/22mm3r9kf2ahyj1zo/stream.m3u8" type="application/x-mpegURL"/>
-      </video>
-     </div>
-     <div class="grid-item">
-      <video class="video-js vjs-default-skin vjs-big-play-centered" controls="" id="meridian-cam" playsinline="" preload="auto">
-       <source src="https://s75.ipcamlive.com/streams/4bej4nl59hr8ibvay/stream.m3u8" type="application/x-mpegURL"/>
-      </video>
-     </div>
-    </div>
-   </section>
-   <section class="dashboard-section" id="tlv-cams">
-    <div class="section-header">
-     <h1 class="section-title">
-      Tel Aviv Cameras
-     </h1>
-     <div class="swell-summary-card" id="tlv-swell-card">
-      <div class="swell-data-container" style="display: flex; gap: 15px;">
-       <div class="swell-item">
-        <div class="swell-label">
-         Wave Height
-        </div>
-        <div class="swell-value">
-         0.32m
-        </div>
-       </div>
-       <div class="swell-item">
-        <div class="swell-label">
-         Swell
-        </div>
-        <div class="swell-value">
-         0.26m
-        </div>
-       </div>
-       <div class="swell-item">
-        <div class="swell-label">
-         Period
-        </div>
-        <div class="swell-value">
-         5.15s
-        </div>
-       </div>
-       <div class="swell-item">
-        <div class="swell-label">
-         Dir
-        </div>
-        <div class="swell-value">
-         292°
-        </div>
-       </div>
-      </div>
-     </div>
-    </div>
-    <!-- Python script will inject grid items here -->
-    <!-- <div class="grid-container"> -->
-    <!-- </div> -->
-    <div class="grid-container">
-     <div class="grid-item">
-      <video class="video-js vjs-default-skin vjs-big-play-centered" controls="" id="dolphinarium-cam" playsinline="" preload="auto">
-       <source src="https://s68.ipcamlive.com/streams/44ld3v4j5krfngige/stream.m3u8" type="application/x-mpegURL"/>
-      </video>
-     </div>
-     <div class="grid-item">
-      <video class="video-js vjs-default-skin vjs-big-play-centered" controls="" id="hilton-cam" playsinline="" preload="auto">
-       <source src="https://s46.ipcamlive.com/streams/2eb7qjn5igupz8qap/stream.m3u8" type="application/x-mpegURL"/>
-      </video>
-     </div>
-     <div class="grid-item">
-      <video class="video-js vjs-default-skin vjs-big-play-centered" controls="" id="yafo-cam" playsinline="" preload="auto">
-       <source src="https://s122.ipcamlive.com/streams/7aqoed5ytrz0b6qkx/stream.m3u8" type="application/x-mpegURL"/>
-      </video>
-     </div>
-    </div>
-   </section>
   </main>
   <footer>
    <p>
@@ -241,6 +286,69 @@
     </script>
    </p>
   </footer>
+  <script>
+   document.addEventListener('DOMContentLoaded', function() {
+        function createChart(ctxId, label, labels, waveData, swellData) {
+            const ctx = document.getElementById(ctxId);
+            if (!ctx) return;
+            
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'Wave Height (m)',
+                            data: waveData,
+                            borderColor: 'rgba(0, 123, 255, 1)',
+                            backgroundColor: 'rgba(0, 123, 255, 0.1)',
+                            borderWidth: 2,
+                            fill: true,
+                            tension: 0.4
+                        },
+                        {
+                            label: 'Swell Height (m)',
+                            data: swellData,
+                            borderColor: 'rgba(40, 167, 69, 1)',
+                            backgroundColor: 'rgba(40, 167, 69, 0.1)',
+                            borderWidth: 2,
+                            borderDash: [5, 5],
+                            fill: true,
+                            tension: 0.4
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'top' },
+                        tooltip: { mode: 'index', intersect: false }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: { display: true, text: 'Height (m)' }
+                        },
+                        x: {
+                            ticks: { 
+                                maxTicksLimit: 8,
+                                autoSkip: true,
+                                maxRotation: 45,
+                                minRotation: 45
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Injected Data
+    
+        createChart('haifaChart', 'Haifa Forecast', ["06/02 00:00", "06/02 01:00", "06/02 02:00", "06/02 03:00", "06/02 04:00", "06/02 05:00", "06/02 06:00", "06/02 07:00", "06/02 08:00", "06/02 09:00", "06/02 10:00", "06/02 11:00", "06/02 12:00", "06/02 13:00", "06/02 14:00", "06/02 15:00", "06/02 16:00", "06/02 17:00", "06/02 18:00", "06/02 19:00", "06/02 20:00", "06/02 21:00", "06/02 22:00", "06/02 23:00"], [0.42, 0.42, 0.4, 0.4, 0.38, 0.38, 0.38, 0.4, 0.4, 0.38, 0.36, 0.34, 0.34, 0.36, 0.36, 0.38, 0.38, 0.4, 0.4, 0.42, 0.42, 0.42, 0.42, 0.42], [0.38, 0.38, 0.36, 0.34, 0.34, 0.32, 0.3, 0.3, 0.28, 0.26, 0.26, 0.24, 0.24, 0.22, 0.22, 0.24, 0.24, 0.26, 0.26, 0.28, 0.28, 0.28, 0.26, 0.26]);
+        createChart('tlvChart', 'TLV Forecast', ["06/02 00:00", "06/02 01:00", "06/02 02:00", "06/02 03:00", "06/02 04:00", "06/02 05:00", "06/02 06:00", "06/02 07:00", "06/02 08:00", "06/02 09:00", "06/02 10:00", "06/02 11:00", "06/02 12:00", "06/02 13:00", "06/02 14:00", "06/02 15:00", "06/02 16:00", "06/02 17:00", "06/02 18:00", "06/02 19:00", "06/02 20:00", "06/02 21:00", "06/02 22:00", "06/02 23:00"], [0.4, 0.4, 0.38, 0.36, 0.36, 0.34, 0.34, 0.32, 0.32, 0.32, 0.32, 0.32, 0.32, 0.32, 0.32, 0.34, 0.34, 0.36, 0.36, 0.38, 0.38, 0.38, 0.38, 0.38], [0.4, 0.4, 0.38, 0.36, 0.36, 0.34, 0.32, 0.3, 0.28, 0.26, 0.26, 0.24, 0.22, 0.22, 0.2, 0.22, 0.24, 0.26, 0.28, 0.28, 0.3, 0.28, 0.24, 0.22]);
+    });
+  </script>
   <script>
    window.addEventListener('load', function() {
   if(document.getElementById('bat-galim-cam')) { videojs('bat-galim-cam').play(); }
