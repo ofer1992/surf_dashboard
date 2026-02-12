@@ -111,6 +111,32 @@ body {
     font-size: 1.1rem;
 }
 
+/* Buoy Card */
+.buoy-summary-card {
+    background: #20b2aa;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    box-shadow: var(--shadow);
+    margin-bottom: 10px;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.buoy-summary-card .buoy-title {
+    font-size: 0.7rem;
+    opacity: 0.9;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.buoy-summary-card .buoy-time {
+    font-size: 0.65rem;
+    opacity: 0.8;
+}
+
 /* Cards */
 .card {
     background: var(--card-bg);

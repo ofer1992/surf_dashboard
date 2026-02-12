@@ -33,6 +33,9 @@
                     <!-- Swell data injected here -->
                     <div class="swell-loading">Loading swell data...</div>
                 </div>
+                <div id="buoy-card" class="buoy-summary-card">
+                    <div class="buoy-loading">Loading buoy data...</div>
+                </div>
             </div>
         
             <!-- Restored Live Wind -->
@@ -113,13 +116,16 @@
                 </div>
                 
                 <div class="card forecast-card full-width">
-                    <h3>Isramar Wave Model</h3>
-                    <iframe id="waves_frame" class="responsive-iframe"
-                        src="https://isramar.ocean.org.il/isramar2009/wave_model/ShowTimeSeries.aspx?x=35.0368&y=32.9151&model=wam&modeldate=2103030000&region=fine"></iframe>
-                    <script>
-                        const d = moment().format('YYMMDD0000');
-                        document.getElementById("waves_frame").src = `https://isramar.ocean.org.il/isramar2009/wave_model/ShowTimeSeries.aspx?x=35.0368&y=32.9151&model=wam&modeldate=${d}&region=fine`;
-                    </script>
+                    <h3>ISRAMAR 5-Day Forecast: Haifa</h3>
+                    <div class="chart-container" style="position: relative; height:300px; width:100%">
+                        <canvas id="isramarHaifaChart"></canvas>
+                    </div>
+                </div>
+                <div class="card forecast-card full-width">
+                    <h3>ISRAMAR 5-Day Forecast: Tel Aviv</h3>
+                    <div class="chart-container" style="position: relative; height:300px; width:100%">
+                        <canvas id="isramarTlvChart"></canvas>
+                    </div>
                 </div>
             </div>
         </section>

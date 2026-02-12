@@ -45,7 +45,7 @@
          Wave Height
         </div>
         <div class="swell-value">
-         1.34m
+         1.32m
         </div>
        </div>
        <div class="swell-item">
@@ -53,7 +53,7 @@
          Swell
         </div>
         <div class="swell-value">
-         1.3m
+         1.22m
         </div>
        </div>
        <div class="swell-item">
@@ -61,7 +61,7 @@
          Period
         </div>
         <div class="swell-value">
-         5.3s
+         5.35s
         </div>
        </div>
        <div class="swell-item">
@@ -70,6 +70,42 @@
         </div>
         <div class="swell-value">
          278°
+        </div>
+       </div>
+      </div>
+     </div>
+     <div class="buoy-summary-card" id="buoy-card">
+      <div style="display: flex; gap: 15px; align-items: center;">
+       <div>
+        <div class="buoy-title">
+         Hadera Buoy
+        </div>
+        <div class="buoy-time">
+         2026-02-12 07:00 UTC
+        </div>
+       </div>
+       <div class="swell-item">
+        <div class="swell-label">
+         Hs
+        </div>
+        <div class="swell-value">
+         1.2m
+        </div>
+       </div>
+       <div class="swell-item">
+        <div class="swell-label">
+         Period
+        </div>
+        <div class="swell-value">
+         6.9s
+        </div>
+       </div>
+       <div class="swell-item">
+        <div class="swell-label">
+         Hmax
+        </div>
+        <div class="swell-value">
+         1.5m
         </div>
        </div>
       </div>
@@ -128,7 +164,7 @@
          Wave Height
         </div>
         <div class="swell-value">
-         1.3m
+         1.22m
         </div>
        </div>
        <div class="swell-item">
@@ -136,7 +172,7 @@
          Swell
         </div>
         <div class="swell-value">
-         1.26m
+         1.18m
         </div>
        </div>
        <div class="swell-item">
@@ -144,7 +180,7 @@
          Period
         </div>
         <div class="swell-value">
-         5.4s
+         5.5s
         </div>
        </div>
        <div class="swell-item">
@@ -152,7 +188,7 @@
          Dir
         </div>
         <div class="swell-value">
-         287°
+         286°
         </div>
        </div>
       </div>
@@ -266,14 +302,21 @@
      </div>
      <div class="card forecast-card full-width">
       <h3>
-       Isramar Wave Model
+       ISRAMAR 5-Day Forecast: Haifa
       </h3>
-      <iframe class="responsive-iframe" id="waves_frame" src="https://isramar.ocean.org.il/isramar2009/wave_model/ShowTimeSeries.aspx?x=35.0368&amp;y=32.9151&amp;model=wam&amp;modeldate=2103030000®ion=fine">
-      </iframe>
-      <script>
-       const d = moment().format('YYMMDD0000');
-                        document.getElementById("waves_frame").src = `https://isramar.ocean.org.il/isramar2009/wave_model/ShowTimeSeries.aspx?x=35.0368&y=32.9151&model=wam&modeldate=${d}&region=fine`;
-      </script>
+      <div class="chart-container" style="position: relative; height:300px; width:100%">
+       <canvas id="isramarHaifaChart">
+       </canvas>
+      </div>
+     </div>
+     <div class="card forecast-card full-width">
+      <h3>
+       ISRAMAR 5-Day Forecast: Tel Aviv
+      </h3>
+      <div class="chart-container" style="position: relative; height:300px; width:100%">
+       <canvas id="isramarTlvChart">
+       </canvas>
+      </div>
      </div>
     </div>
    </section>
@@ -347,6 +390,87 @@
     
         createChart('haifaChart', 'Haifa Forecast', ["12/02 00:00", "12/02 01:00", "12/02 02:00", "12/02 03:00", "12/02 04:00", "12/02 05:00", "12/02 06:00", "12/02 07:00", "12/02 08:00", "12/02 09:00", "12/02 10:00", "12/02 11:00", "12/02 12:00", "12/02 13:00", "12/02 14:00", "12/02 15:00", "12/02 16:00", "12/02 17:00", "12/02 18:00", "12/02 19:00", "12/02 20:00", "12/02 21:00", "12/02 22:00", "12/02 23:00"], [1.42, 1.42, 1.4, 1.38, 1.38, 1.36, 1.34, 1.34, 1.32, 1.32, 1.32, 1.32, 1.3, 1.3, 1.28, 1.24, 1.22, 1.18, 1.14, 1.1, 1.06, 1.04, 1.0, 0.98], [1.4, 1.36, 1.34, 1.34, 1.34, 1.34, 1.32, 1.3, 1.28, 1.26, 1.22, 1.2, 1.18, 1.14, 1.12, 1.14, 1.14, 1.16, 1.12, 1.08, 1.04, 1.0, 0.98, 0.94]);
         createChart('tlvChart', 'TLV Forecast', ["12/02 00:00", "12/02 01:00", "12/02 02:00", "12/02 03:00", "12/02 04:00", "12/02 05:00", "12/02 06:00", "12/02 07:00", "12/02 08:00", "12/02 09:00", "12/02 10:00", "12/02 11:00", "12/02 12:00", "12/02 13:00", "12/02 14:00", "12/02 15:00", "12/02 16:00", "12/02 17:00", "12/02 18:00", "12/02 19:00", "12/02 20:00", "12/02 21:00", "12/02 22:00", "12/02 23:00"], [1.34, 1.32, 1.32, 1.32, 1.32, 1.32, 1.3, 1.3, 1.28, 1.26, 1.22, 1.2, 1.18, 1.14, 1.12, 1.08, 1.06, 1.02, 1.0, 0.98, 0.96, 0.94, 0.9, 0.88], [1.3, 1.3, 1.28, 1.28, 1.28, 1.28, 1.26, 1.26, 1.24, 1.2, 1.18, 1.14, 1.1, 1.08, 1.04, 1.02, 1.02, 1.0, 0.98, 0.98, 0.96, 0.92, 0.9, 0.86]);
+    });
+  </script>
+  <script>
+   document.addEventListener('DOMContentLoaded', function() {
+        function createIsramarChart(ctxId, labels, heights, periods, winds) {
+            const ctx = document.getElementById(ctxId);
+            if (!ctx) return;
+
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'Wave Height (m)',
+                            data: heights,
+                            borderColor: 'rgba(0, 123, 255, 1)',
+                            backgroundColor: 'rgba(0, 123, 255, 0.15)',
+                            borderWidth: 2,
+                            fill: true,
+                            tension: 0.4,
+                            yAxisID: 'y'
+                        },
+                        {
+                            label: 'Period (s)',
+                            data: periods,
+                            borderColor: 'rgba(255, 159, 64, 1)',
+                            backgroundColor: 'rgba(255, 159, 64, 0.05)',
+                            borderWidth: 2,
+                            borderDash: [5, 5],
+                            fill: false,
+                            tension: 0.4,
+                            yAxisID: 'y1'
+                        },
+                        {
+                            label: 'Wind (kt)',
+                            data: winds,
+                            borderColor: 'rgba(150, 150, 150, 0.7)',
+                            backgroundColor: 'rgba(150, 150, 150, 0.1)',
+                            borderWidth: 1,
+                            fill: true,
+                            tension: 0.4,
+                            yAxisID: 'y'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: { mode: 'index', intersect: false },
+                    plugins: {
+                        legend: { position: 'top' },
+                        tooltip: { mode: 'index', intersect: false }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            position: 'left',
+                            title: { display: true, text: 'Height (m) / Wind (kt)' }
+                        },
+                        y1: {
+                            beginAtZero: true,
+                            position: 'right',
+                            title: { display: true, text: 'Period (s)' },
+                            grid: { drawOnChartArea: false }
+                        },
+                        x: {
+                            ticks: {
+                                maxTicksLimit: 10,
+                                autoSkip: true,
+                                maxRotation: 45,
+                                minRotation: 45
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        createIsramarChart('isramarHaifaChart', ["Thu 12/02 00:00", "Thu 12/02 03:00", "Thu 12/02 06:00", "Thu 12/02 09:00", "Thu 12/02 12:00", "Thu 12/02 15:00", "Thu 12/02 18:00", "Thu 12/02 21:00", "Fri 13/02 00:00", "Fri 13/02 03:00", "Fri 13/02 06:00", "Fri 13/02 09:00", "Fri 13/02 12:00", "Fri 13/02 15:00", "Fri 13/02 18:00", "Fri 13/02 21:00", "Sat 14/02 00:00", "Sat 14/02 03:00", "Sat 14/02 06:00", "Sat 14/02 09:00", "Sat 14/02 12:00", "Sat 14/02 15:00", "Sat 14/02 18:00", "Sat 14/02 21:00", "Sun 15/02 00:00", "Sun 15/02 03:00", "Sun 15/02 06:00", "Sun 15/02 09:00", "Sun 15/02 12:00", "Sun 15/02 15:00", "Sun 15/02 18:00", "Sun 15/02 21:00", "Mon 16/02 00:00", "Mon 16/02 03:00", "Mon 16/02 06:00", "Mon 16/02 09:00", "Mon 16/02 12:00", "Mon 16/02 15:00", "Mon 16/02 18:00", "Mon 16/02 21:00", "Tue 17/02 00:00"], [1.17, 1.19, 1.18, 1.18, 1.08, 0.9, 0.74, 0.61, 0.53, 0.5, 0.47, 0.5, 0.61, 1.63, 1.83, 2.08, 2.73, 3.42, 3.88, 3.97, 3.84, 3.71, 3.46, 3.14, 2.83, 2.54, 2.27, 2.03, 1.81, 1.61, 1.44, 1.28, 1.14, 1.01, 0.88, 0.77, 0.68, 0.61, 0.57, 0.95, 1.29], [6.77, 7.11, 7.36, 7.45, 7.45, 7.38, 7.28, 7.24, 7.37, 7.56, 7.9, 8.54, 8.31, 5.46, 6.91, 7.53, 8.92, 10.35, 10.65, 10.76, 11.57, 12.03, 12.06, 11.92, 11.7, 11.42, 11.11, 10.78, 10.43, 10.09, 9.75, 9.42, 9.1, 8.75, 8.15, 6.93, 5.92, 5.63, 5.64, 4.62, 5.93], [8.63, 7.88, 8.29, 8.05, 7.56, 8.03, 8.37, 9.96, 10.77, 12.91, 14.51, 13.4, 10.51, 23.81, 15.15, 16.4, 17.38, 20.85, 24.7, 24.03, 16.24, 6.46, 0.45, 3.84, 5.74, 7.29, 8.78, 9.16, 10.48, 12.55, 10.52, 12.13, 16.23, 17.68, 18.22, 16.13, 11.23, 7.37, 14.75, 15.03, 11.62]);
+        createIsramarChart('isramarTlvChart', ["Thu 12/02 00:00", "Thu 12/02 03:00", "Thu 12/02 06:00", "Thu 12/02 09:00", "Thu 12/02 12:00", "Thu 12/02 15:00", "Thu 12/02 18:00", "Thu 12/02 21:00", "Fri 13/02 00:00", "Fri 13/02 03:00", "Fri 13/02 06:00", "Fri 13/02 09:00", "Fri 13/02 12:00", "Fri 13/02 15:00", "Fri 13/02 18:00", "Fri 13/02 21:00", "Sat 14/02 00:00", "Sat 14/02 03:00", "Sat 14/02 06:00", "Sat 14/02 09:00", "Sat 14/02 12:00", "Sat 14/02 15:00", "Sat 14/02 18:00", "Sat 14/02 21:00", "Sun 15/02 00:00", "Sun 15/02 03:00", "Sun 15/02 06:00", "Sun 15/02 09:00", "Sun 15/02 12:00", "Sun 15/02 15:00", "Sun 15/02 18:00", "Sun 15/02 21:00", "Mon 16/02 00:00", "Mon 16/02 03:00", "Mon 16/02 06:00", "Mon 16/02 09:00", "Mon 16/02 12:00", "Mon 16/02 15:00", "Mon 16/02 18:00", "Mon 16/02 21:00", "Tue 17/02 00:00"], [1.07, 1.13, 1.17, 1.17, 1.12, 0.99, 0.81, 0.64, 0.53, 0.47, 0.44, 0.47, 0.56, 1.85, 2.31, 2.28, 2.65, 3.16, 3.47, 3.52, 3.63, 3.63, 3.42, 3.1, 2.78, 2.49, 2.23, 1.99, 1.77, 1.58, 1.4, 1.25, 1.12, 0.99, 0.86, 0.71, 0.6, 0.58, 0.81, 1.16, 1.48], [6.89, 7.24, 7.52, 7.71, 7.78, 7.74, 7.63, 7.52, 7.49, 7.51, 7.64, 8.38, 8.16, 5.17, 7.35, 8.1, 9.16, 10.52, 11.25, 11.57, 12.07, 12.31, 12.23, 12.01, 11.73, 11.41, 11.08, 10.73, 10.38, 10.03, 9.69, 9.35, 9.03, 8.69, 8.26, 7.62, 6.72, 6.05, 4.66, 5.48, 6.65], [7.95, 10.06, 11.16, 11.28, 8.12, 6.08, 7.14, 7.4, 10.12, 12.56, 14.46, 18.29, 19.2, 26.59, 6.52, 11.02, 13.65, 16.87, 16.71, 17.35, 12.09, 4.5, 4.56, 6.27, 6.6, 8.38, 8.86, 8.82, 9.15, 11.94, 11.6, 10.45, 10.82, 10.47, 8.62, 6.08, 1.97, 5.47, 15.4, 10.17, 8.99]);
     });
   </script>
   <script>
