@@ -18,14 +18,55 @@
 
     <nav class="navbar">
         <div class="nav-container">
+            <a href="#forecasts" class="nav-link">External Models</a>
             <a href="#haifa-section" class="nav-link">Haifa</a>
             <a href="#tlv-section" class="nav-link">Tel Aviv</a>
-            <a href="#forecasts" class="nav-link">External Models</a>
         </div>
     </nav>
 
     <main class="container">
-        
+
+        <section id="forecasts" class="dashboard-section">
+            <h1 class="section-title">External Models</h1>
+            <div class="forecast-grid">
+                <!-- Restored WindGuru -->
+                <div class="card forecast-card">
+                    <h3>WindGuru: Atlit</h3>
+                    <div id="wg_target_1"></div>
+                    <script id="wg_fwdg_910107_100_1682159258594">
+                        (function (window, document) {
+                            var loader = function () {
+                                var arg = ["s=910107", "m=100", "uid=wg_fwdg_910107_100_1682159258594", "wj=knots", "tj=c", "waj=m", "odh=0", "doh=24", "fhours=96", "hrsm=2", "vt=forecasts", "lng=en", "idbs=1", "p=WINDSPD,GUST,SMER"];
+                                var script = document.createElement("script");
+                                var tag = document.getElementsByTagName("script")[0];
+                                script.src = "https://www.windguru.cz/js/widget.php?" + (arg.join("&"));
+                                tag.parentNode.insertBefore(script, tag);
+                            };
+                            window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
+                        })(window, document);
+                    </script>
+                </div>
+
+                <div class="card forecast-card">
+                    <h3>WindGuru: Bat Galim</h3>
+                    <div id="wg_target_2"></div>
+                    <script id="wg_fwdg_885332_100_1628969744484">
+                        (function (window, document) {
+                            var loader = function () {
+                                var arg = ["s=885332", "m=100", "uid=wg_fwdg_885332_100_1628969744484", "wj=knots", "tj=c", "waj=m", "odh=0", "doh=24", "fhours=96", "hrsm=2", "vt=forecasts", "lng=en", "idbs=1", "p=WINDSPD,GUST,SMER"];
+                                var script = document.createElement("script");
+                                var tag = document.getElementsByTagName("script")[0];
+                                script.src = "https://www.windguru.cz/js/widget.php?" + (arg.join("&"));
+                                tag.parentNode.insertBefore(script, tag);
+                            };
+                            window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
+                        })(window, document);
+                    </script>
+                </div>
+
+            </div>
+        </section>
+
         <section id="haifa-section" class="dashboard-section">
             <div class="section-header">
                 <h1 class="section-title">Haifa</h1>
@@ -75,47 +116,6 @@
     <div id="tlv-cams-container">
         <!-- Python script will inject grid items here -->
     </div>
-        </section>
-        
-        <section id="forecasts" class="dashboard-section">
-            <h1 class="section-title">External Models</h1>
-            <div class="forecast-grid">
-                <!-- Restored WindGuru -->
-                <div class="card forecast-card">
-                    <h3>WindGuru: Atlit</h3>
-                    <div id="wg_target_1"></div>
-                    <script id="wg_fwdg_910107_100_1682159258594">
-                        (function (window, document) {
-                            var loader = function () {
-                                var arg = ["s=910107", "m=100", "uid=wg_fwdg_910107_100_1682159258594", "wj=knots", "tj=c", "waj=m", "odh=0", "doh=24", "fhours=96", "hrsm=2", "vt=forecasts", "lng=en", "idbs=1", "p=WINDSPD,GUST,SMER"];
-                                var script = document.createElement("script");
-                                var tag = document.getElementsByTagName("script")[0];
-                                script.src = "https://www.windguru.cz/js/widget.php?" + (arg.join("&"));
-                                tag.parentNode.insertBefore(script, tag);
-                            };
-                            window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
-                        })(window, document);
-                    </script>
-                </div>
-
-                <div class="card forecast-card">
-                    <h3>WindGuru: Bat Galim</h3>
-                    <div id="wg_target_2"></div>
-                    <script id="wg_fwdg_885332_100_1628969744484">
-                        (function (window, document) {
-                            var loader = function () {
-                                var arg = ["s=885332", "m=100", "uid=wg_fwdg_885332_100_1628969744484", "wj=knots", "tj=c", "waj=m", "odh=0", "doh=24", "fhours=96", "hrsm=2", "vt=forecasts", "lng=en", "idbs=1", "p=WINDSPD,GUST,SMER"];
-                                var script = document.createElement("script");
-                                var tag = document.getElementsByTagName("script")[0];
-                                script.src = "https://www.windguru.cz/js/widget.php?" + (arg.join("&"));
-                                tag.parentNode.insertBefore(script, tag);
-                            };
-                            window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
-                        })(window, document);
-                    </script>
-                </div>
-                
-            </div>
         </section>
 
     </main>

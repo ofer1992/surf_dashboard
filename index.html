@@ -21,18 +21,64 @@
  <body>
   <nav class="navbar">
    <div class="nav-container">
+    <a class="nav-link" href="#forecasts">
+     External Models
+    </a>
     <a class="nav-link" href="#haifa-section">
      Haifa
     </a>
     <a class="nav-link" href="#tlv-section">
      Tel Aviv
     </a>
-    <a class="nav-link" href="#forecasts">
-     External Models
-    </a>
    </div>
   </nav>
   <main class="container">
+   <section class="dashboard-section" id="forecasts">
+    <h1 class="section-title">
+     External Models
+    </h1>
+    <div class="forecast-grid">
+     <!-- Restored WindGuru -->
+     <div class="card forecast-card">
+      <h3>
+       WindGuru: Atlit
+      </h3>
+      <div id="wg_target_1">
+      </div>
+      <script id="wg_fwdg_910107_100_1682159258594">
+       (function (window, document) {
+                            var loader = function () {
+                                var arg = ["s=910107", "m=100", "uid=wg_fwdg_910107_100_1682159258594", "wj=knots", "tj=c", "waj=m", "odh=0", "doh=24", "fhours=96", "hrsm=2", "vt=forecasts", "lng=en", "idbs=1", "p=WINDSPD,GUST,SMER"];
+                                var script = document.createElement("script");
+                                var tag = document.getElementsByTagName("script")[0];
+                                script.src = "https://www.windguru.cz/js/widget.php?" + (arg.join("&"));
+                                tag.parentNode.insertBefore(script, tag);
+                            };
+                            window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
+                        })(window, document);
+      </script>
+     </div>
+     <div class="card forecast-card">
+      <h3>
+       WindGuru: Bat Galim
+      </h3>
+      <div id="wg_target_2">
+      </div>
+      <script id="wg_fwdg_885332_100_1628969744484">
+       (function (window, document) {
+                            var loader = function () {
+                                var arg = ["s=885332", "m=100", "uid=wg_fwdg_885332_100_1628969744484", "wj=knots", "tj=c", "waj=m", "odh=0", "doh=24", "fhours=96", "hrsm=2", "vt=forecasts", "lng=en", "idbs=1", "p=WINDSPD,GUST,SMER"];
+                                var script = document.createElement("script");
+                                var tag = document.getElementsByTagName("script")[0];
+                                script.src = "https://www.windguru.cz/js/widget.php?" + (arg.join("&"));
+                                tag.parentNode.insertBefore(script, tag);
+                            };
+                            window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
+                        })(window, document);
+      </script>
+     </div>
+    </div>
+   </section>
    <section class="dashboard-section" id="haifa-section">
     <div class="section-header">
      <h1 class="section-title">
@@ -86,7 +132,7 @@
          Hadera Buoy
         </div>
         <div class="buoy-time">
-         2026-02-21 05:00 UTC
+         2026-02-21 06:00 UTC
         </div>
        </div>
        <div class="swell-item">
@@ -94,7 +140,7 @@
          Hs
         </div>
         <div class="swell-value">
-         0.5m
+         0.6m
         </div>
        </div>
        <div class="swell-item">
@@ -146,12 +192,12 @@
       </div>
       <div class="grid-item">
        <video class="video-js vjs-default-skin vjs-big-play-centered" controls="" id="bat-galim-cam" playsinline="" preload="auto">
-        <source src="https://s122.ipcamlive.com/streams/7a4cnxmzikdpiwyub/stream.m3u8" type="application/x-mpegURL"/>
+        <source src="https://s122.ipcamlive.com/streams/7ac43lafp6ex0rmvk/stream.m3u8" type="application/x-mpegURL"/>
        </video>
       </div>
       <div class="grid-item">
        <video class="video-js vjs-default-skin vjs-big-play-centered" controls="" id="meridian-cam" playsinline="" preload="auto">
-        <source src="https://s122.ipcamlive.com/streams/7ajn9agutczkmbe13/stream.m3u8" type="application/x-mpegURL"/>
+        <source src="https://s75.ipcamlive.com/streams/4bkf3ywsv0qz4mevt/stream.m3u8" type="application/x-mpegURL"/>
        </video>
       </div>
      </div>
@@ -218,17 +264,17 @@
      <div class="grid-container">
       <div class="grid-item">
        <video class="video-js vjs-default-skin vjs-big-play-centered" controls="" id="dolphinarium-cam" playsinline="" preload="auto">
-        <source src="https://s68.ipcamlive.com/streams/445ucjsstbkrqunq8/stream.m3u8" type="application/x-mpegURL"/>
+        <source src="https://s68.ipcamlive.com/streams/44eheyclduhtzt71f/stream.m3u8" type="application/x-mpegURL"/>
        </video>
       </div>
       <div class="grid-item">
        <video class="video-js vjs-default-skin vjs-big-play-centered" controls="" id="hilton-cam" playsinline="" preload="auto">
-        <source src="https://s46.ipcamlive.com/streams/2e0bikunbay1xfnzx/stream.m3u8" type="application/x-mpegURL"/>
+        <source src="https://s122.ipcamlive.com/streams/7ajks5tolwnmnca8s/stream.m3u8" type="application/x-mpegURL"/>
        </video>
       </div>
       <div class="grid-item">
        <video class="video-js vjs-default-skin vjs-big-play-centered" controls="" id="yafo-cam" playsinline="" preload="auto">
-        <source src="https://s10.ipcamlive.com/streams/0alh6xqste1ypayt9/stream.m3u8" type="application/x-mpegURL"/>
+        <source src="https://s46.ipcamlive.com/streams/2ecavx2ezl3rkqrpo/stream.m3u8" type="application/x-mpegURL"/>
        </video>
       </div>
       <div class="grid-item">
@@ -263,52 +309,6 @@
        <iframe allowfullscreen="" autoplay="" src="https://streaming.therdteam.com/live/play.html?id=10003">
        </iframe>
       </div>
-     </div>
-    </div>
-   </section>
-   <section class="dashboard-section" id="forecasts">
-    <h1 class="section-title">
-     External Models
-    </h1>
-    <div class="forecast-grid">
-     <!-- Restored WindGuru -->
-     <div class="card forecast-card">
-      <h3>
-       WindGuru: Atlit
-      </h3>
-      <div id="wg_target_1">
-      </div>
-      <script id="wg_fwdg_910107_100_1682159258594">
-       (function (window, document) {
-                            var loader = function () {
-                                var arg = ["s=910107", "m=100", "uid=wg_fwdg_910107_100_1682159258594", "wj=knots", "tj=c", "waj=m", "odh=0", "doh=24", "fhours=96", "hrsm=2", "vt=forecasts", "lng=en", "idbs=1", "p=WINDSPD,GUST,SMER"];
-                                var script = document.createElement("script");
-                                var tag = document.getElementsByTagName("script")[0];
-                                script.src = "https://www.windguru.cz/js/widget.php?" + (arg.join("&"));
-                                tag.parentNode.insertBefore(script, tag);
-                            };
-                            window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
-                        })(window, document);
-      </script>
-     </div>
-     <div class="card forecast-card">
-      <h3>
-       WindGuru: Bat Galim
-      </h3>
-      <div id="wg_target_2">
-      </div>
-      <script id="wg_fwdg_885332_100_1628969744484">
-       (function (window, document) {
-                            var loader = function () {
-                                var arg = ["s=885332", "m=100", "uid=wg_fwdg_885332_100_1628969744484", "wj=knots", "tj=c", "waj=m", "odh=0", "doh=24", "fhours=96", "hrsm=2", "vt=forecasts", "lng=en", "idbs=1", "p=WINDSPD,GUST,SMER"];
-                                var script = document.createElement("script");
-                                var tag = document.getElementsByTagName("script")[0];
-                                script.src = "https://www.windguru.cz/js/widget.php?" + (arg.join("&"));
-                                tag.parentNode.insertBefore(script, tag);
-                            };
-                            window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
-                        })(window, document);
-      </script>
      </div>
     </div>
    </section>
