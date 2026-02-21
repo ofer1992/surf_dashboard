@@ -5,59 +5,16 @@ import os
 import requests
 
 
-def get_marine_forecast(lat, lon):
-    """
-    Fetches marine weather data from Open-Meteo API (24h forecast).
-    """
-    url = "https://marine-api.open-meteo.com/v1/marine"
-    params = {
-        "latitude": lat,
-        "longitude": lon,
-        "hourly": [
-            "wave_height",
-            "wave_period",
-            "wave_direction",
-            "swell_wave_height",
-            "swell_wave_period",
-            "swell_wave_direction",
-        ],
-        "timezone": "auto",
-        "forecast_days": 1,  # Next 24h
-    }
-    try:
-        response = requests.get(url, params=params)
-        response.raise_for_status()
-        return response.json()
-    except Exception as e:
-        print(f"Error fetching data: {e}")
-        return None
-
-
-def get_current_swell_data(data):
-    """
-    Extracts current hour's data for the summary card.
-    """
-    if not data or "hourly" not in data:
-        return None
-
-    current_hour = datetime.now().hour
-
-    return {
-        "wave_height": data["hourly"]["wave_height"][current_hour],
-        "wave_period": data["hourly"]["wave_period"][current_hour],
-        "wave_direction": data["hourly"]["wave_direction"][current_hour],
-        "swell_height": data["hourly"]["swell_wave_height"][current_hour],
-        "swell_period": data["hourly"]["swell_wave_period"][current_hour],
-        "swell_direction": data["hourly"]["swell_wave_direction"][current_hour],
-    }
-
-
 def create_swell_card_content(soup, data):
     """
-    Generates HTML content for the swell card.
+    Generates HTML content for the swell summary card using ISRAMAR forecast data.
+    Uses the first (current) entry from the ISRAMAR forecast.
     """
-    if not data:
+    if not data or len(data) == 0:
         return "Data Unavailable"
+
+    now = datetime.now(timezone.utc)
+    current = min(data, key=lambda d: abs((d["dt"] - now).total_seconds()))
 
     container = soup.new_tag(
         "div",
@@ -74,12 +31,12 @@ def create_swell_card_content(soup, data):
         item.append(val)
         container.append(item)
 
-    add_item("Wave Height", data["wave_height"], "m")
-    add_item("Swell", data["swell_height"], "m")
-    add_item("Period", data["swell_period"], "s")
-    add_item("Dir", data["swell_direction"], "°")
+    add_item("Wave Height", current["wave_height"], "m")
+    add_item("Period", current["wave_period"], "s")
+    add_item("Dir", int(current["wave_dir"]), "°")
+    add_item("Wind", int(current["wind_speed_kts"]), "kt")
 
-    return container
+    return container, current["datetime"]
 
 
 def fetch_isramar_forecast(lon, lat):
@@ -112,6 +69,7 @@ def fetch_isramar_forecast(lon, lat):
         wnd_cells = [td.text.strip() for td in wnd.find_all("td")] if wnd else []
         dt = base_dt + timedelta(hours=3 * i)
         results.append({
+            "dt": dt.replace(tzinfo=timezone.utc),
             "datetime": dt.strftime("%a %d/%m %H:%M"),
             "wave_height": float(wav_cells[2]) if len(wav_cells) > 2 else 0,
             "wave_dir": float(wav_cells[5]) if len(wav_cells) > 5 else 0,
@@ -307,105 +265,8 @@ def create_iframe_tag(soup, src_url):
     return grid_item
 
 
-def inject_chart_data(soup, haifa_data, tlv_data):
-    """
-    Injects the JavaScript to render charts with the fetched data.
-    """
-    script_content = """
-    document.addEventListener('DOMContentLoaded', function() {
-        function createChart(ctxId, label, labels, waveData, swellData) {
-            const ctx = document.getElementById(ctxId);
-            if (!ctx) return;
-            
-            new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: labels,
-                    datasets: [
-                        {
-                            label: 'Wave Height (m)',
-                            data: waveData,
-                            borderColor: 'rgba(0, 123, 255, 1)',
-                            backgroundColor: 'rgba(0, 123, 255, 0.1)',
-                            borderWidth: 2,
-                            fill: true,
-                            tension: 0.4
-                        },
-                        {
-                            label: 'Swell Height (m)',
-                            data: swellData,
-                            borderColor: 'rgba(40, 167, 69, 1)',
-                            backgroundColor: 'rgba(40, 167, 69, 0.1)',
-                            borderWidth: 2,
-                            borderDash: [5, 5],
-                            fill: true,
-                            tension: 0.4
-                        }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: { position: 'top' },
-                        tooltip: { mode: 'index', intersect: false }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            title: { display: true, text: 'Height (m)' }
-                        },
-                        x: {
-                            ticks: { 
-                                maxTicksLimit: 8,
-                                autoSkip: true,
-                                maxRotation: 45,
-                                minRotation: 45
-                            }
-                        }
-                    }
-                }
-            });
-        }
-
-        // Injected Data
-    """
-
-    # Format data for JS
-    def format_hourly(data):
-        if not data or "hourly" not in data:
-            return "[]", "[]", "[]"
-
-        # Format time as "Day HH:MM" for clarity
-        times = []
-        for t in data["hourly"]["time"]:
-            # t is ISO format "YYYY-MM-DDTHH:MM"
-            dt = datetime.fromisoformat(t)
-            times.append(dt.strftime("%d/%m %H:%M"))
-
-        waves = data["hourly"]["wave_height"]
-        swells = data["hourly"]["swell_wave_height"]
-        return json.dumps(times), json.dumps(waves), json.dumps(swells)
-
-    h_labels, h_waves, h_swells = format_hourly(haifa_data)
-    t_labels, t_waves, t_swells = format_hourly(tlv_data)
-
-    script_content += f"\n        createChart('haifaChart', 'Haifa Forecast', {h_labels}, {h_waves}, {h_swells});"
-    script_content += f"\n        createChart('tlvChart', 'TLV Forecast', {t_labels}, {t_waves}, {t_swells});"
-    script_content += "\n    });"
-
-    script_tag = soup.new_tag("script")
-    script_tag.string = script_content
-    soup.body.append(script_tag)
-
 
 def main():
-    # Coordinates
-    COORDS = {
-        "haifa": {"lat": 32.8304, "lon": 34.9745},
-        "tlv": {"lat": 32.0853, "lon": 34.7818},
-    }
-
     # Load Template
     if not os.path.exists("template.html"):
         print("Error: template.html not found.")
@@ -416,31 +277,7 @@ def main():
 
     soup = BeautifulSoup(template_content, "html.parser")
 
-    # Store fetched data for charts
-    forecast_data = {}
-
-    # --- Fetch & Inject Swell Data ---
-    for loc, coords in COORDS.items():
-        print(f"Fetching swell data for {loc}...")
-        raw_data = get_marine_forecast(coords["lat"], coords["lon"])
-        forecast_data[loc] = raw_data
-
-        # Summary Card
-        current_data = get_current_swell_data(raw_data)
-        card_id = f"{loc}-swell-card"
-        card_div = soup.find(id=card_id)
-        if card_div:
-            card_div.clear()
-            content = create_swell_card_content(soup, current_data)
-            if content == "Data Unavailable":
-                card_div.string = "Forecast Unavailable"
-            else:
-                card_div.append(content)
-
-    # Inject Chart JS
-    inject_chart_data(soup, forecast_data.get("haifa"), forecast_data.get("tlv"))
-
-    # --- Fetch & Inject ISRAMAR 5-Day Forecast ---
+    # --- Fetch & Inject ISRAMAR Forecast ---
     ISRAMAR_COORDS = {
         "haifa": {"lon": 35.0368, "lat": 32.9151},
         "tlv": {"lon": 34.70, "lat": 32.08},
@@ -449,6 +286,24 @@ def main():
     for loc, coords in ISRAMAR_COORDS.items():
         print(f"Fetching ISRAMAR forecast for {loc}...")
         isramar_data[loc] = fetch_isramar_forecast(coords["lon"], coords["lat"])
+
+        # Summary Card (uses ISRAMAR entry closest to current time)
+        card_id = f"{loc}-swell-card"
+        card_div = soup.find(id=card_id)
+        if card_div:
+            card_div.clear()
+            result = create_swell_card_content(soup, isramar_data[loc])
+            if result == "Data Unavailable":
+                card_div.string = "Forecast Unavailable"
+            else:
+                content, timestamp = result
+                # Wrap time label + card in a container
+                wrapper = soup.new_tag("div", attrs={"class": "swell-card-wrapper"})
+                time_label = soup.new_tag("div", attrs={"class": "swell-time"})
+                time_label.string = timestamp
+                wrapper.append(time_label)
+                card_div.append(content)
+                card_div.wrap(wrapper)
 
     inject_isramar_chart_data(soup, isramar_data.get("haifa"), isramar_data.get("tlv"))
 

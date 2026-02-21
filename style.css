@@ -137,6 +137,18 @@ body {
     opacity: 0.8;
 }
 
+.swell-card-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.swell-time {
+    font-size: 0.6rem;
+    color: #999;
+    text-align: left;
+    margin-bottom: 2px;
+}
+
 /* Cards */
 .card {
     background: var(--card-bg);
