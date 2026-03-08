@@ -193,7 +193,7 @@ def inject_isramar_chart_data(soup, haifa_data, tlv_data):
                             borderWidth: 1,
                             fill: true,
                             tension: 0.4,
-                            yAxisID: 'y'
+                            yAxisID: 'y1'
                         }
                     ]
                 },
@@ -209,12 +209,12 @@ def inject_isramar_chart_data(soup, haifa_data, tlv_data):
                         y: {
                             beginAtZero: true,
                             position: 'left',
-                            title: { display: true, text: 'Height (m) / Wind (kt)' }
+                            title: { display: true, text: 'Wave Height (m)' }
                         },
                         y1: {
                             beginAtZero: true,
                             position: 'right',
-                            title: { display: true, text: 'Period (s)' },
+                            title: { display: true, text: 'Period (s) / Wind (kt)' },
                             grid: { drawOnChartArea: false }
                         },
                         x: {
