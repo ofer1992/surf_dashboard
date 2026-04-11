@@ -1,5 +1,6 @@
 from bs4 import BeautifulSoup
 from datetime import datetime, timedelta, timezone
+from zoneinfo import ZoneInfo
 import json
 import os
 import requests
@@ -68,9 +69,11 @@ def fetch_isramar_forecast(lon, lat):
         wav_cells = [td.text.strip() for td in wav.find_all("td")]
         wnd_cells = [td.text.strip() for td in wnd.find_all("td")] if wnd else []
         dt = base_dt + timedelta(hours=3 * i)
+        dt_utc = dt.replace(tzinfo=timezone.utc)
+        dt_israel = dt_utc.astimezone(ZoneInfo("Asia/Jerusalem"))
         results.append({
-            "dt": dt.replace(tzinfo=timezone.utc),
-            "datetime": dt.strftime("%a %d/%m %H:%M"),
+            "dt": dt_utc,
+            "datetime": dt_israel.strftime("%a %d/%m %H:%M"),
             "wave_height": float(wav_cells[2]) if len(wav_cells) > 2 else 0,
             "wave_dir": float(wav_cells[5]) if len(wav_cells) > 5 else 0,
             "wave_period": float(wav_cells[8]) if len(wav_cells) > 8 else 0,
@@ -102,7 +105,13 @@ def create_buoy_card_content(soup, buoy_data):
         return "Buoy Unavailable"
 
     params = {p["name"]: p["values"][0] for p in buoy_data["parameters"]}
-    obs_time = buoy_data.get("datetime", "")
+    obs_time_raw = buoy_data.get("datetime", "")
+    try:
+        obs_dt = datetime.strptime(obs_time_raw, "%Y-%m-%d %H:%M UTC")
+        obs_dt = obs_dt.replace(tzinfo=timezone.utc)
+        obs_time = obs_dt.astimezone(ZoneInfo("Asia/Jerusalem")).strftime("%Y-%m-%d %H:%M IST")
+    except (ValueError, TypeError):
+        obs_time = obs_time_raw
 
     container = soup.new_tag("div", attrs={"style": "display: flex; gap: 15px; align-items: center;"})
 
