@@ -84,8 +84,46 @@
      <h1 class="section-title">
       Haifa
      </h1>
-     <div class="swell-summary-card" id="haifa-swell-card">
-      Forecast Unavailable
+     <div class="swell-card-wrapper">
+      <div class="swell-time">
+       Fri 24/04 09:00
+      </div>
+      <div class="swell-summary-card" id="haifa-swell-card">
+       <div class="swell-data-container" style="display: flex; gap: 15px;">
+        <div class="swell-item">
+         <div class="swell-label">
+          Wave Height
+         </div>
+         <div class="swell-value">
+          0.33m
+         </div>
+        </div>
+        <div class="swell-item">
+         <div class="swell-label">
+          Period
+         </div>
+         <div class="swell-value">
+          4.86s
+         </div>
+        </div>
+        <div class="swell-item">
+         <div class="swell-label">
+          Dir
+         </div>
+         <div class="swell-value">
+          286°
+         </div>
+        </div>
+        <div class="swell-item">
+         <div class="swell-label">
+          Wind
+         </div>
+         <div class="swell-value">
+          1kt
+         </div>
+        </div>
+       </div>
+      </div>
      </div>
      <div class="buoy-summary-card" id="buoy-card">
       <div style="display: flex; gap: 15px; align-items: center;">
@@ -94,7 +132,7 @@
          Hadera Buoy
         </div>
         <div class="buoy-time">
-         2026-04-24 03:00 IST
+         2026-04-24 07:00 IST
         </div>
        </div>
        <div class="swell-item">
@@ -102,7 +140,7 @@
          Hs
         </div>
         <div class="swell-value">
-         0.3m
+         0.2m
         </div>
        </div>
        <div class="swell-item">
@@ -110,7 +148,7 @@
          Period
         </div>
         <div class="swell-value">
-         5.4s
+         5.2s
         </div>
        </div>
        <div class="swell-item">
@@ -170,8 +208,46 @@
      <h1 class="section-title">
       Tel Aviv
      </h1>
-     <div class="swell-summary-card" id="tlv-swell-card">
-      Forecast Unavailable
+     <div class="swell-card-wrapper">
+      <div class="swell-time">
+       Fri 24/04 09:00
+      </div>
+      <div class="swell-summary-card" id="tlv-swell-card">
+       <div class="swell-data-container" style="display: flex; gap: 15px;">
+        <div class="swell-item">
+         <div class="swell-label">
+          Wave Height
+         </div>
+         <div class="swell-value">
+          0.37m
+         </div>
+        </div>
+        <div class="swell-item">
+         <div class="swell-label">
+          Period
+         </div>
+         <div class="swell-value">
+          4.58s
+         </div>
+        </div>
+        <div class="swell-item">
+         <div class="swell-label">
+          Dir
+         </div>
+         <div class="swell-value">
+          300°
+         </div>
+        </div>
+        <div class="swell-item">
+         <div class="swell-label">
+          Wind
+         </div>
+         <div class="swell-value">
+          3kt
+         </div>
+        </div>
+       </div>
+      </div>
      </div>
     </div>
     <div class="card forecast-chart-card">
@@ -322,8 +398,8 @@
             });
         }
 
-        createIsramarChart('isramarHaifaChart', [], [], [], []);
-        createIsramarChart('isramarTlvChart', [], [], [], []);
+        createIsramarChart('isramarHaifaChart', ["Fri 24/04 03:00", "Fri 24/04 06:00", "Fri 24/04 09:00", "Fri 24/04 12:00", "Fri 24/04 15:00", "Fri 24/04 18:00", "Fri 24/04 21:00", "Sat 25/04 00:00", "Sat 25/04 03:00", "Sat 25/04 06:00", "Sat 25/04 09:00", "Sat 25/04 12:00", "Sat 25/04 15:00", "Sat 25/04 18:00", "Sat 25/04 21:00", "Sun 26/04 00:00", "Sun 26/04 03:00", "Sun 26/04 06:00", "Sun 26/04 09:00", "Sun 26/04 12:00", "Sun 26/04 15:00", "Sun 26/04 18:00", "Sun 26/04 21:00", "Mon 27/04 00:00", "Mon 27/04 03:00", "Mon 27/04 06:00", "Mon 27/04 09:00", "Mon 27/04 12:00", "Mon 27/04 15:00", "Mon 27/04 18:00", "Mon 27/04 21:00", "Tue 28/04 00:00", "Tue 28/04 03:00", "Tue 28/04 06:00", "Tue 28/04 09:00", "Tue 28/04 12:00", "Tue 28/04 15:00", "Tue 28/04 18:00", "Tue 28/04 21:00", "Wed 29/04 00:00", "Wed 29/04 03:00"], [0.4, 0.36, 0.33, 0.31, 0.32, 0.63, 0.75, 0.8, 0.74, 0.64, 0.54, 0.51, 0.58, 0.79, 0.73, 0.6, 0.53, 0.5, 0.52, 0.72, 0.61, 0.53, 0.52, 0.76, 1.49, 1.74, 1.7, 1.64, 1.53, 1.38, 1.28, 1.18, 1.08, 0.99, 0.93, 0.89, 0.85, 0.82, 0.78, 0.73, 0.69], [4.49, 4.72, 4.86, 4.91, 4.65, 3.39, 3.74, 3.94, 4.03, 4.1, 4.13, 4.22, 4.05, 4.14, 4.33, 4.29, 4.2, 4.29, 4.12, 4.11, 4.5, 4.65, 4.89, 5.65, 6.54, 7.18, 7.24, 7.03, 6.96, 7.04, 6.99, 6.88, 6.73, 6.58, 6.48, 6.4, 6.38, 6.4, 6.34, 6.24, 6.11], [4.15, 2.02, 1.84, 6.7, 11.45, 14.49, 14.62, 13.28, 10.94, 7.21, 3.16, 6.59, 10.87, 11.67, 7.77, 7.94, 7.73, 7.08, 11.22, 7.44, 12.72, 16.26, 16.05, 17.51, 13.38, 11.99, 13.44, 14.94, 12.96, 8.84, 5.98, 6.44, 6.91, 7.64, 7.3, 9.87, 8.69, 5.41, 1.11, 0.84, 0.51]);
+        createIsramarChart('isramarTlvChart', ["Fri 24/04 03:00", "Fri 24/04 06:00", "Fri 24/04 09:00", "Fri 24/04 12:00", "Fri 24/04 15:00", "Fri 24/04 18:00", "Fri 24/04 21:00", "Sat 25/04 00:00", "Sat 25/04 03:00", "Sat 25/04 06:00", "Sat 25/04 09:00", "Sat 25/04 12:00", "Sat 25/04 15:00", "Sat 25/04 18:00", "Sat 25/04 21:00", "Sun 26/04 00:00", "Sun 26/04 03:00", "Sun 26/04 06:00", "Sun 26/04 09:00", "Sun 26/04 12:00", "Sun 26/04 15:00", "Sun 26/04 18:00", "Sun 26/04 21:00", "Mon 27/04 00:00", "Mon 27/04 03:00", "Mon 27/04 06:00", "Mon 27/04 09:00", "Mon 27/04 12:00", "Mon 27/04 15:00", "Mon 27/04 18:00", "Mon 27/04 21:00", "Tue 28/04 00:00", "Tue 28/04 03:00", "Tue 28/04 06:00", "Tue 28/04 09:00", "Tue 28/04 12:00", "Tue 28/04 15:00", "Tue 28/04 18:00", "Tue 28/04 21:00", "Wed 29/04 00:00", "Wed 29/04 03:00"], [0.47, 0.41, 0.37, 0.34, 0.59, 0.86, 0.97, 0.86, 0.72, 0.62, 0.54, 0.48, 0.47, 0.67, 0.68, 0.62, 0.55, 0.48, 0.45, 0.69, 0.71, 0.6, 0.55, 1.09, 1.71, 1.8, 1.69, 1.59, 1.49, 1.37, 1.27, 1.18, 1.09, 1.0, 0.95, 0.9, 0.87, 0.83, 0.79, 0.75, 0.71], [4.32, 4.44, 4.58, 4.64, 3.28, 3.79, 4.15, 4.44, 4.49, 4.44, 4.37, 4.32, 4.18, 3.8, 4.3, 4.55, 4.56, 4.51, 4.49, 4.39, 4.98, 5.07, 5.31, 5.52, 6.86, 7.24, 7.28, 7.15, 7.03, 6.97, 6.93, 6.88, 6.78, 6.67, 6.58, 6.53, 6.48, 6.45, 6.39, 6.3, 6.17], [5.25, 3.64, 3.68, 9.32, 14.83, 18.18, 16.42, 11.03, 6.64, 2.95, 1.89, 4.62, 10.82, 13.66, 8.13, 7.56, 8.04, 5.25, 6.87, 1.42, 13.49, 12.05, 15.98, 14.71, 10.72, 9.05, 10.97, 13.94, 11.15, 8.23, 3.21, 2.72, 4.04, 6.03, 7.12, 7.61, 8.29, 7.92, 4.76, 2.34, 2.37]);
     });
   </script>
   <script>
