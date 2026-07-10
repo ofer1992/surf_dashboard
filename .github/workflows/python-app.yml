@@ -32,8 +32,10 @@ jobs:
         pip install requests beautifulsoup4 
       
     - name: Fetch stream url
+      # Webcam scraping is best-effort: a failure here must never block the
+      # forecast generation / commit steps below.
+      continue-on-error: true
       run: |
-        # stop the build if there are Python syntax errors or undefined names
         python fetch_stream.py
         
     - name: generate cams.html
@@ -41,6 +43,10 @@ jobs:
         python cams.py     
         
     - name: commit files
+      # Only publish generated output on schedule / push to main. On pull_request
+      # events we still run fetch + generate above as validation, but must not
+      # commit or push to main (which fails as a non-fast-forward).
+      if: github.event_name != 'pull_request'
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
@@ -48,8 +54,9 @@ jobs:
         git diff-index --quiet HEAD || (git commit -a -m "updated logs" --allow-empty)
 
     - name: push changes
+      if: github.event_name != 'pull_request'
       uses: ad-m/github-push-action@v0.6.0
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        branch: main 
+        branch: main
 
