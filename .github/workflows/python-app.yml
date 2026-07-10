@@ -32,8 +32,10 @@ jobs:
         pip install requests beautifulsoup4 
       
     - name: Fetch stream url
+      # Webcam scraping is best-effort: a failure here must never block the
+      # forecast generation / commit steps below.
+      continue-on-error: true
       run: |
-        # stop the build if there are Python syntax errors or undefined names
         python fetch_stream.py
         
     - name: generate cams.html
