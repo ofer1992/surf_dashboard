@@ -195,6 +195,11 @@
         <source src="https://s122.ipcamlive.com/streams/7aa7vzs0scjqvbdwz/stream.m3u8" type="application/x-mpegURL"/>
        </video>
       </div>
+      <div class="grid-item">
+       <video class="video-js vjs-default-skin vjs-big-play-centered" controls="" id="meridian-cam" playsinline="" preload="auto">
+        <source src="https://s122.ipcamlive.com/streams/7agylnpi2ns3q5vyz/stream.m3u8" type="application/x-mpegURL"/>
+       </video>
+      </div>
      </div>
     </div>
    </section>
@@ -400,6 +405,7 @@
   <script>
    window.addEventListener('load', function() {
   if(document.getElementById('bat-galim-cam')) { videojs('bat-galim-cam').play(); }
+  if(document.getElementById('meridian-cam')) { videojs('meridian-cam').play(); }
   if(document.getElementById('dolphinarium-cam')) { videojs('dolphinarium-cam').play(); }
   if(document.getElementById('hilton-cam')) { videojs('hilton-cam').play(); }
   if(document.getElementById('yafo-cam')) { videojs('yafo-cam').play(); }
