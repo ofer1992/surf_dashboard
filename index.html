@@ -263,11 +263,6 @@
      <!-- Python script will inject grid items here -->
      <div class="grid-container">
       <div class="grid-item">
-       <video class="video-js vjs-default-skin vjs-big-play-centered" controls="" id="dolphinarium-cam" playsinline="" preload="auto">
-        <source src="https://s31.ipcamlive.com/streams/1fsxtfhgrqldqk7oj/stream.m3u8" type="application/x-mpegURL"/>
-       </video>
-      </div>
-      <div class="grid-item">
        <video class="video-js vjs-default-skin vjs-big-play-centered" controls="" id="hilton-cam" playsinline="" preload="auto">
         <source src="https://s27.ipcamlive.com/streams/1bu0stbmfjaclezwy/stream.m3u8" type="application/x-mpegURL"/>
        </video>
@@ -406,7 +401,6 @@
    window.addEventListener('load', function() {
   if(document.getElementById('bat-galim-cam')) { videojs('bat-galim-cam').play(); }
   if(document.getElementById('meridian-cam')) { videojs('meridian-cam').play(); }
-  if(document.getElementById('dolphinarium-cam')) { videojs('dolphinarium-cam').play(); }
   if(document.getElementById('hilton-cam')) { videojs('hilton-cam').play(); }
   if(document.getElementById('yafo-cam')) { videojs('yafo-cam').play(); }
 });
