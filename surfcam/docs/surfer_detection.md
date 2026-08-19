@@ -153,6 +153,11 @@ separates them, because they are not separable in those features.
 
 **So: use a learned detector.** Classical CV is not going to carry this.
 
+> **Update:** this was tested. A stock, zero-shot tiled YOLO reaches 0.86
+> precision / 0.77 recall with no training, and makes **zero false positives**
+> at conf ≥ 0.15 — it ignores the wave crests entirely. See
+> [detector_eval.md](detector_eval.md); the plan below is superseded by it.
+
 ## Proposed: the detection pipeline
 
 1. **Slice the frame.** At 10–20 px, surfers are far too small for a detector

@@ -8,8 +8,9 @@ deliberately separate from the dashboard: the GitHub Pages workflow installs
 only `requests` and `beautifulsoup4`, and must not be made to pull heavy CV
 wheels every 15 minutes. Install `surfcam/requirements.txt` separately.
 
-Start with **[docs/surfer_detection.md](docs/surfer_detection.md)** — measured
-findings about the camera and what they imply for the design.
+Start with **[docs/detector_eval.md](docs/detector_eval.md)** — the zero-shot
+YOLO detector and its measured precision/recall. Background on the camera
+itself is in **[docs/surfer_detection.md](docs/surfer_detection.md)**.
 
 The short version:
 
@@ -19,9 +20,13 @@ The short version:
   homography with no depth model. Confirmed by stitching the presets.
 - Projection to the world splits into a per-frame pose homography and a
   **single hand-calibrated sea-plane homography**.
-- **Detection is the hard part.** Surfers are 10–20 px; classical background
-  subtraction produces ~550–750 false blobs per frame and does not work. A
-  learned, tiled detector is the way; the classical code is a labelling aid.
+- **Detection works zero-shot with tiled YOLO.** Stock COCO weights, no
+  training: **0.86 precision / 0.77 recall**, and **zero false positives** at
+  conf ≥ 0.15. Upscale factor is the key knob — surfers are 10–20 px, so the
+  frame is sliced into 192 px tiles fed at 768. Misses are dominated by prone
+  paddlers. A bigger model (`yolo11x`) is *worse* on both axes.
+- Classical background subtraction produced ~550–750 false blobs per frame and
+  does not work; that code is retained only as a labelling aid.
 
 | module | purpose |
 |---|---|
@@ -30,4 +35,6 @@ The short version:
 | `motion.py` | track pan, segment the tour into MOVE / DWELL |
 | `mosaic.py` | stitch presets into the reference panorama |
 | `project.py` | panorama pixels → world metres, with error analysis |
-| `detect.py` | candidate proposals for labelling (**not** a detector) |
+| `detect.py` | classical candidate proposals for labelling (**not** a detector) |
+| `yolo_detect.py` | tiled zero-shot YOLO detection |
+| `eval_detector.py` | scores detections against `groundtruth.json` |
