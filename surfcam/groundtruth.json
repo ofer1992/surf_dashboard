@@ -1,0 +1,19 @@
+{
+  "_comment": "Hand-labelled surfer centres for the yafo cam, preset A dwell (frames 1s apart, camera static to <0.5px). Labelled at 5-6x zoom using a 3-frame filmstrip as an aid: a real surfer persists and drifts smoothly between frames, wave texture does not. Coordinates are (x, y) centres in the full 1920x1080 frame. 'ambiguous' entries are blobs that could not be resolved confidently at this resolution; they are excluded from both TP and FP so they neither flatter nor punish the detector.",
+  "_source": "yafo m3u8, captured 2026-08-19, frames dense/yafo_{16,20,24}.jpg",
+  "_water_region": [180, 860],
+  "frames": {
+    "yafo_16.jpg": {
+      "surfers": [[88,458],[98,482],[120,484],[154,481],[117,513],[246,489],[284,489],[338,516],[552,593],[33,577]],
+      "ambiguous": [[294,502],[168,484]]
+    },
+    "yafo_20.jpg": {
+      "surfers": [[94,457],[112,468],[100,483],[147,480],[165,486],[120,505],[248,488],[284,491],[335,512],[16,577],[560,599]],
+      "ambiguous": [[262,484],[355,505]]
+    },
+    "yafo_24.jpg": {
+      "surfers": [[93,472],[79,489],[123,500],[135,508],[152,488],[240,496],[262,492],[325,510],[14,572],[557,588]],
+      "ambiguous": [[370,507],[33,559]]
+    }
+  }
+}
