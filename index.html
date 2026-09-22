@@ -84,8 +84,46 @@
      <h1 class="section-title">
       Haifa
      </h1>
-     <div class="swell-summary-card" id="haifa-swell-card">
-      Forecast Unavailable
+     <div class="swell-card-wrapper">
+      <div class="swell-time">
+       Tue 22/09 09:00
+      </div>
+      <div class="swell-summary-card" id="haifa-swell-card">
+       <div class="swell-data-container" style="display: flex; gap: 15px;">
+        <div class="swell-item">
+         <div class="swell-label">
+          Wave Height
+         </div>
+         <div class="swell-value">
+          0.67m
+         </div>
+        </div>
+        <div class="swell-item">
+         <div class="swell-label">
+          Period
+         </div>
+         <div class="swell-value">
+          5.9s
+         </div>
+        </div>
+        <div class="swell-item">
+         <div class="swell-label">
+          Dir
+         </div>
+         <div class="swell-value">
+          289°
+         </div>
+        </div>
+        <div class="swell-item">
+         <div class="swell-label">
+          Wind
+         </div>
+         <div class="swell-value">
+          0kt
+         </div>
+        </div>
+       </div>
+      </div>
      </div>
      <div class="buoy-summary-card" id="buoy-card">
       <div style="display: flex; gap: 15px; align-items: center;">
@@ -94,7 +132,7 @@
          Hadera Buoy
         </div>
         <div class="buoy-time">
-         2026-09-22 01:00 IST
+         2026-09-22 07:00 IST
         </div>
        </div>
        <div class="swell-item">
@@ -102,7 +140,7 @@
          Hs
         </div>
         <div class="swell-value">
-         0.7m
+         0.6m
         </div>
        </div>
        <div class="swell-item">
@@ -118,7 +156,7 @@
          Hmax
         </div>
         <div class="swell-value">
-         0.9m
+         0.7m
         </div>
        </div>
       </div>
@@ -159,7 +197,7 @@
       </div>
       <div class="grid-item">
        <video class="video-js vjs-default-skin vjs-big-play-centered" controls="" id="meridian-cam" playsinline="" preload="auto">
-        <source src="https://s74.ipcamlive.com/streams//stream.m3u8" type="application/x-mpegURL"/>
+        <source src="https://s74.ipcamlive.com/streams/4afqijc0qkmdwafsj/stream.m3u8" type="application/x-mpegURL"/>
        </video>
       </div>
      </div>
@@ -170,8 +208,46 @@
      <h1 class="section-title">
       Tel Aviv
      </h1>
-     <div class="swell-summary-card" id="tlv-swell-card">
-      Forecast Unavailable
+     <div class="swell-card-wrapper">
+      <div class="swell-time">
+       Tue 22/09 09:00
+      </div>
+      <div class="swell-summary-card" id="tlv-swell-card">
+       <div class="swell-data-container" style="display: flex; gap: 15px;">
+        <div class="swell-item">
+         <div class="swell-label">
+          Wave Height
+         </div>
+         <div class="swell-value">
+          0.69m
+         </div>
+        </div>
+        <div class="swell-item">
+         <div class="swell-label">
+          Period
+         </div>
+         <div class="swell-value">
+          5.97s
+         </div>
+        </div>
+        <div class="swell-item">
+         <div class="swell-label">
+          Dir
+         </div>
+         <div class="swell-value">
+          294°
+         </div>
+        </div>
+        <div class="swell-item">
+         <div class="swell-label">
+          Wind
+         </div>
+         <div class="swell-value">
+          1kt
+         </div>
+        </div>
+       </div>
+      </div>
      </div>
     </div>
     <div class="card forecast-chart-card">
@@ -322,8 +398,8 @@
             });
         }
 
-        createIsramarChart('isramarHaifaChart', [], [], [], []);
-        createIsramarChart('isramarTlvChart', [], [], [], []);
+        createIsramarChart('isramarHaifaChart', ["Tue 22/09 03:00", "Tue 22/09 06:00", "Tue 22/09 09:00", "Tue 22/09 12:00", "Tue 22/09 15:00", "Tue 22/09 18:00", "Tue 22/09 21:00", "Wed 23/09 00:00", "Wed 23/09 03:00", "Wed 23/09 06:00", "Wed 23/09 09:00", "Wed 23/09 12:00", "Wed 23/09 15:00", "Wed 23/09 18:00", "Wed 23/09 21:00", "Thu 24/09 00:00", "Thu 24/09 03:00", "Thu 24/09 06:00", "Thu 24/09 09:00", "Thu 24/09 12:00", "Thu 24/09 15:00", "Thu 24/09 18:00", "Thu 24/09 21:00", "Fri 25/09 00:00", "Fri 25/09 03:00", "Fri 25/09 06:00", "Fri 25/09 09:00", "Fri 25/09 12:00", "Fri 25/09 15:00", "Fri 25/09 18:00", "Fri 25/09 21:00", "Sat 26/09 00:00", "Sat 26/09 03:00", "Sat 26/09 06:00", "Sat 26/09 09:00", "Sat 26/09 12:00", "Sat 26/09 15:00", "Sat 26/09 18:00", "Sat 26/09 21:00", "Sun 27/09 00:00", "Sun 27/09 03:00"], [0.63, 0.65, 0.67, 0.67, 0.67, 0.66, 0.65, 0.64, 0.63, 0.62, 0.61, 0.6, 0.59, 0.57, 0.56, 0.57, 0.57, 0.57, 0.57, 0.57, 0.71, 0.82, 0.86, 0.94, 1.0, 1.03, 1.03, 1.03, 1.01, 1.0, 0.96, 0.91, 0.86, 0.79, 0.73, 0.68, 0.64, 0.66, 0.6, 0.55, 0.51], [5.69, 5.8, 5.9, 5.96, 5.86, 5.89, 5.94, 5.93, 5.83, 5.66, 5.51, 5.41, 5.26, 5.25, 5.18, 5.07, 5.07, 5.14, 5.18, 5.19, 4.62, 4.85, 5.49, 6.19, 6.6, 6.78, 6.87, 6.95, 7.0, 6.85, 6.97, 7.03, 6.96, 6.81, 6.62, 6.4, 6.1, 5.37, 5.44, 5.46, 5.41], [4.0, 3.36, 0.85, 8.44, 9.72, 6.97, 3.19, 3.0, 2.99, 4.68, 5.4, 8.17, 9.4, 7.9, 6.32, 5.12, 4.52, 6.36, 5.72, 6.09, 14.73, 10.78, 8.35, 6.12, 5.35, 3.24, 1.83, 5.35, 10.01, 10.99, 6.85, 3.42, 3.7, 1.55, 0.61, 8.57, 10.64, 9.84, 6.59, 3.2, 2.95]);
+        createIsramarChart('isramarTlvChart', ["Tue 22/09 03:00", "Tue 22/09 06:00", "Tue 22/09 09:00", "Tue 22/09 12:00", "Tue 22/09 15:00", "Tue 22/09 18:00", "Tue 22/09 21:00", "Wed 23/09 00:00", "Wed 23/09 03:00", "Wed 23/09 06:00", "Wed 23/09 09:00", "Wed 23/09 12:00", "Wed 23/09 15:00", "Wed 23/09 18:00", "Wed 23/09 21:00", "Thu 24/09 00:00", "Thu 24/09 03:00", "Thu 24/09 06:00", "Thu 24/09 09:00", "Thu 24/09 12:00", "Thu 24/09 15:00", "Thu 24/09 18:00", "Thu 24/09 21:00", "Fri 25/09 00:00", "Fri 25/09 03:00", "Fri 25/09 06:00", "Fri 25/09 09:00", "Fri 25/09 12:00", "Fri 25/09 15:00", "Fri 25/09 18:00", "Fri 25/09 21:00", "Sat 26/09 00:00", "Sat 26/09 03:00", "Sat 26/09 06:00", "Sat 26/09 09:00", "Sat 26/09 12:00", "Sat 26/09 15:00", "Sat 26/09 18:00", "Sat 26/09 21:00", "Sun 27/09 00:00", "Sun 27/09 03:00"], [0.66, 0.67, 0.69, 0.7, 0.71, 0.7, 0.69, 0.68, 0.67, 0.65, 0.63, 0.6, 0.58, 0.59, 0.57, 0.56, 0.55, 0.53, 0.52, 0.53, 0.56, 0.77, 0.86, 0.91, 0.97, 1.0, 1.01, 1.01, 1.01, 1.07, 1.02, 0.97, 0.91, 0.85, 0.78, 0.73, 0.7, 0.74, 0.65, 0.59, 0.54], [5.71, 5.84, 5.97, 6.07, 6.07, 6.07, 6.14, 6.08, 5.93, 5.78, 5.66, 5.58, 5.46, 5.28, 5.27, 5.23, 5.16, 5.12, 5.13, 5.19, 5.23, 4.59, 5.05, 5.87, 6.53, 6.84, 6.96, 7.04, 7.04, 6.51, 6.75, 6.94, 6.94, 6.84, 6.67, 6.46, 6.05, 5.25, 5.47, 5.51, 5.46], [2.17, 2.35, 1.43, 6.28, 9.81, 7.94, 3.58, 1.36, 2.72, 3.05, 4.32, 7.23, 9.44, 9.41, 7.22, 4.71, 2.33, 3.39, 3.39, 4.87, 10.33, 13.19, 11.08, 8.21, 6.05, 2.52, 1.52, 4.41, 11.2, 12.97, 6.73, 1.9, 2.43, 0.58, 0.62, 8.1, 11.67, 10.88, 6.94, 2.86, 1.27]);
     });
   </script>
   <script>
