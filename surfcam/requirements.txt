@@ -1,0 +1,7 @@
+# Kept separate from the repo-root requirements.txt on purpose: the GitHub
+# Pages workflow installs only requests+beautifulsoup4, and must not be made
+# to pull heavy CV wheels every 15 minutes.
+requests
+av
+numpy
+opencv-python-headless
