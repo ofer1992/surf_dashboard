@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+
+# local capture artefacts; these get large fast
+*.ts
+frames/
